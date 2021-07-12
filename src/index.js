@@ -3,6 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import config from './config';
+import Amplify from '@aws-amplify/core';
+
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.POOLID,
+    identityPoolId: config.cognito.IDENTITYPOOLID,
+    userPoolWebClientId: config.cognito.APPCLIENTID
+  },
+  Storage: {
+    region: config.s3.REGION,
+    bucket: config.s3.BUCKET,
+    identityPoolId: config.cognito.IDENTITYPOOLID,
+  },
+  API: {
+    endpoints: [
+      {
+        name: "links",
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION,
+      },
+    ]
+  }
+});
+
 
 ReactDOM.render(
   <React.StrictMode>
