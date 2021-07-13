@@ -1,14 +1,13 @@
 import React from 'react';
-import NavBar from './NavBar'
-import SideBar from './SideBar'
-import MainContent from './MainContent';
+import NavBar from '../NavBar'
+import SideBar from '../SideBar'
+import MainContent from './MainContentContainer';
 import LinksContainer from './LinksContainer'
 
-const Layout =  ({ children }) => {
+const AppContainer =  ({ children }) => {
     return (
         <div>
             <NavBar/>
-                <p>Bismillah from the layout</p>
             <SideBar >
                 <LinksContainer />
             </SideBar>
@@ -19,4 +18,11 @@ const Layout =  ({ children }) => {
     )
 } 
 
-export default Layout
+export default AppContainer;
+
+
+/**
+ * the links container will either show stuff relevant to the current user or will not if not logged in
+ * 
+ * 
+ */

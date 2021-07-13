@@ -6,26 +6,26 @@ import reportWebVitals from './reportWebVitals';
 import config from './amplify.config'
 import Amplify from '@aws-amplify/core';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+const { cognito, s3, apiGateway } = config;
 Amplify.configure({
   Auth: {
     mandatorySignIn: true,
-    region: config.cognito.REGION,
-    userPoolId: config.cognito.POOLID,
-    identityPoolId: config.cognito.IDENTITYPOOLID,
-    userPoolWebClientId: config.cognito.APPCLIENTID
+    region: cognito.REGION,
+    userPoolId: cognito.POOLID,
+    identityPoolId: cognito.IDENTITYPOOLID,
+    userPoolWebClientId: cognito.APPCLIENTID
   },
   Storage: {
-    region: config.s3.REGION,
-    bucket: config.s3.BUCKET,
-    identityPoolId: config.cognito.IDENTITYPOOLID,
+    region: s3.REGION,
+    bucket: s3.BUCKET,
+    identityPoolId: cognito.IDENTITYPOOLID,
   },
   API: {
     endpoints: [
       {
         name: "links",
-        endpoint: config.apiGateway.URL,
-        region: config.apiGateway.REGION,
+        endpoint: apiGateway.URL,
+        region: apiGateway.REGION,
       },
     ]
   }

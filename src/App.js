@@ -1,17 +1,16 @@
 import './App.css';
 import { Auth } from 'aws-amplify';
-import Layout from './components/Layout'
+import AppContainer from './components/containers/AppContainer'
 
 
 const App = () => {
   return (
     <div>
-      <Layout>
+      <AppContainer>
       <div className='bg-green-600'> 
         <p> Layout child</p>
       </div>
-      </Layout>
-
+      </AppContainer>
     </div>
   )
 };  
