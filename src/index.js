@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import config from './config';
+import config from './amplify.config'
 import Amplify from '@aws-amplify/core';
 
 Amplify.configure({
