@@ -2,21 +2,21 @@ import React from 'react';
 import NavBar from './NavBar'
 import SideBar from './SideBar'
 import MainContent from './MainContent';
-
-// this component will be my layout of navbar + sidebar + footer
+import LinksContainer from './LinksContainer'
 
 const Layout =  ({ children }) => {
     return (
         <div>
             <NavBar/>
                 <p>Bismillah from the layout</p>
-            <SideBar />
+            <SideBar >
+                <LinksContainer />
+            </SideBar>
             <MainContent>
                 { children }
             </MainContent>
         </div>
     )
 } 
-
 
 export default Layout
