@@ -10,18 +10,17 @@ const AuthForm = () => {
     const [threeFields, setThreeFields] = useState(true);
     const [password, setPassword] = useState("");
     const [confirmPw, setConfirmPw] = useState("");
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const { setLoggedIn } = useContext(AuthContext);
     
-    const SubmitButton = tw(Button)`text-lg h-10 w-24 mr-3`
+    const SubmitButton = tw(Button)`text-lg font-thin tracking-wide h-10 w-24 mr-3`
     const FormField = tw.p`text-sm p-2 my-2 text-gray-900`
     const FormHeadLine = tw.p`tracking-wide text-2xl mt-8 mb-4 font-light text-gray-900`
-    const ButtonLoadingAnimation = tw.svg`animate-spin h-5 w-5 mr-3`
-    const headlineText = () => {
+    const HeadLineText = () => {
         return (
             <div>
                 <FormHeadLine tw="inline-block">{threeFields ? "Sign Up" : "Sign In"}</FormHeadLine>
-                <FormHeadLine tw="m-0 inline-block ml-2 ">/<button tw=" inline-block ml-3 font-extralight tracking-wide underline " onClick={() => setThreeFields(!threeFields)}>{threeFields ? "   Sign In  " : "  Sign Up  " }Instead</button></FormHeadLine>
+                <FormHeadLine tw="m-0 inline-block ml-2 ">or<button tw=" inline-block ml-3 tracking-wide text-purple-600 " onClick={() => setThreeFields(!threeFields)}>{threeFields ? "   Sign In  " : "  Sign Up  " }</button></FormHeadLine>
             </div> 
         )
     }
@@ -53,7 +52,7 @@ const AuthForm = () => {
     const FormInput = tw.input`shadow bg-purple-100 appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-inner`
     return(
         <div className={` px-32`}>
-            <FormHeadLine>{headlineText()}</FormHeadLine>
+            <HeadLineText />
             <form className={``}>
                 <FormField>Email</FormField>
                 <FormInput required minLength="8" type="text" placeholder="Email" autoComplete="username" onChange={ e => setEmail(e.target.value)}></FormInput>
