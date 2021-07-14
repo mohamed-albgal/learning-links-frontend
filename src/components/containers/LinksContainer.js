@@ -1,9 +1,27 @@
 import React from 'react';
-//this is a container to hold the links that we'll create
-// a link will be a button that links to its content
-//main page will query the backend, every piece of data received will go in a link
-// when a link is clicked useReducer will update the state in the main content container
-const LinksContainer = () => {
+import tw from 'twin.macro';
 
 
+const LinkItem = () => {
+    return (
+        <div tw="w-full bg-indigo-400 hover:scale-150 rounded-sm p-4 my-3">
+        <div tw="h-10 w-full">
+            Link 1
+        </div>
+        </div>
+    )
 }
+
+const LinksContainer = ({drawerOpen}) => {
+    return (
+        <>
+        <LinkItem />
+        <LinkItem />
+        <LinkItem />
+        </>
+    )
+}
+
+export default LinksContainer
+
+//https://react-icons.github.io/react-icons/icons?name=ri

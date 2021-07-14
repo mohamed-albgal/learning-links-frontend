@@ -1,17 +1,15 @@
-import './App.css';
+import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
-import AppContainer from './components/containers/AppContainer'
-
+import NavBar from './components/NavBar'
+import MainContentContainer from './components/containers/MainContentContainer'
 
 const App = () => {
+  const [isAuthed, setIsAuthed] = useState(true);
   return (
-    <div>
-      <AppContainer>
-      <div className='bg-green-600'> 
-        <p> Layout child</p>
-      </div>
-      </AppContainer>
-    </div>
+    <>
+      <NavBar />
+      <MainContentContainer authed={isAuthed} />
+    </>
   )
 };  
 export default App;

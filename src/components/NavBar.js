@@ -1,16 +1,16 @@
 import React from 'react';
 import tw from 'twin.macro';
+import Button from './Button'
 
-const Container = tw.div`w-full fixed top-0 h-10 bg-yellow-200 z-40`
-const Content = tw.div`flex flex-row-reverse`
-const NavOption = tw.p`font-serif font-semibold p-4`
+const Container = tw.div`w-full fixed h-20 top-0 px-6 pt-4 bg-gray-800 z-40`
+const Content = tw.div`flex flex-row-reverse p-1`
+const NavButton = tw(Button)`text-lg h-10 w-24`
+const ButtonContent = tw.p`p-1`
 const NavBar =  () => {
     return (
         <Container>
             <Content>
-                    <NavOption>About</NavOption>
-                    <NavOption>Home</NavOption>
-                    <NavOption>SignIn</NavOption>
+                <NavButton><ButtonContent>Login</ButtonContent></NavButton>
             </Content>
 
         </Container>
