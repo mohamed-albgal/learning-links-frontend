@@ -4,6 +4,8 @@ import { AuthContext } from '../AuthContext';
 import { Auth } from 'aws-amplify';
 import Button from './Button';
 import tw from 'twin.macro';
+import FormHeadLine from './FormHeadLine';
+import Spinner from './Spinner';
 
 
 const AuthForm = () => {
@@ -21,48 +23,66 @@ const AuthForm = () => {
     
     const handleSignUp = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-            if (password != confirmPw){
-                throw new Error("The passwords don't match");
-            }
-            await Auth.signUp({username:email, password: password});
-            setLoading(false);
-            setConfirming(true);
-            setSigningUp(false);
-            setErrorMessage("");
-            setErrorState(false);
-        }catch(e) {
-            console.log(e.message);
-            console.log("error handling sign up button");
-            setLoading(false);
-        }
+        // setLoading(true);
+        console.log("handling signup method")
+    //     try {
+    //         if (password != confirmPw){
+    //             throw new Error("The passwords don't match");
+    //         }
+    //         await Auth.signUp({username:email, password: password});
+    //         setLoading(false);
+    //         setConfirming(true);
+    //         setSigningUp(false);
+    //         setErrorMessage("");
+    //         setErrorState(false);
+    //     }catch(e) {
+    //         console.log(e.message);
+    //         console.log("error handling sign up button");
+    //         setLoading(false);
+    //     }
         
     }
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
+        //     setLoading(true);
+        console.log("handling signin");
+        console.log(password)
+        console.log(email)
+        // try {
+        //     await Auth.signIn(email, password);
+        //     const user = await Auth.currentUserInfo();
+        //     setAuthed({id:user.id, username:user.username, email: user.attributes.email});
+        //     setLoading(false);
+        //     setErrorState(false);
+        //     history.push('/');
+        // }catch(e){
+        //     setLoading("");
+        //     setErrorState(true);
+        //     setErrorMessage(e.message);
+        // }
     }
 
     const handleConfirm = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-            await Auth.confirmSignUp(email, verification)
-            const user = await Auth.currentUserInfo();
-            console.log("LOGGED IN:");
-            console.log(user);
-            setAuthed({id:user.id, username:user.username, email:user.attributes.email})
-            setLoading(false);
-            history.push('/');
-        }catch(e){
-            setLoading(false);
-            setErrorState(true);
-            setErrorMessage(e.message);
-        }
+        console.log("handling signIN method");
+        // setLoading(true);
+        // try {
+        //     await Auth.confirmSignUp(email, verification)
+        //     const user = await Auth.currentUserInfo();
+        //     console.log("LOGGED IN:");
+        //     console.log(user);
+        //     setAuthed({id:user.id, username:user.username, email:user.attributes.email})
+        //     setLoading(false);
+        //     history.push('/');
+        // }catch(e){
+        //     setLoading(false);
+        //     setErrorState(true);
+        //     setErrorMessage(e.message);
+        // }
     }
     const SubmitButton = tw(Button)`text-lg font-thin tracking-wide h-10 w-24 mr-3`
+    const ButtonContainer = tw.div`py-5 w-full my-5`;
     const FormField = tw.p`text-sm p-2 my-2 text-gray-900`
-    const FormHeadLine = tw.p`tracking-wide text-2xl mt-8 mb-4 font-light text-gray-900`
 
     const HeadLineText = () => {
         return (
@@ -79,14 +99,11 @@ const AuthForm = () => {
         )
     }
 
-    const handleConfirmChange = e => setConfirmPw(e.target.value);
-    const Spinner = () => {
-        return (
-            <div class=" flex justify-center items-center ">
-                <div class="animate-spin rounded-full h-8 w-7 border-t-2 border-b-2 border-purple-100 "></div>
-            </div>
-        )
-    }
+    const handleEmailInputChange = e => setEmail(e.target.value);
+    const handlePwInputChange = e => setPassword(e.target.value);
+    const handlePwConfirmInputChange = e => setConfirmPw(e.target.value);
+    const handleVerificationChange = e => setVerification(e.target.value);
+
     const ConditionalButtonContent = () => {
         return (
             isLoading ? <Spinner /> :
@@ -99,17 +116,17 @@ const AuthForm = () => {
             <>
                 {!isConfirming ? <> 
                     <FormField>Email</FormField>
-                    <FormInput required minLength="8" type="text" placeholder="Email" autoComplete="username" value={email} onChange={ e => setEmail(e.target.value)}/>
+                    <FormInput required minLength="8" autocomplete="new-password" type="email" placeholder="Email"  defaultValue={email}  onBlur={handleEmailInputChange}/>
                     <FormField>Password</FormField>
-                    <FormInput required minLength="8" type="text" placeholder="Password" autoComplete="password" value={password} onChange={ e => setPassword(e.target.value)} />
+                    <FormInput required minLength="8" autocomplete="new-password" type="password" placeholder="Password"  defaultValue={password}  onBlur={handlePwInputChange} />
                     { isSigningUp && <>
                         <FormField>Confirm Password</FormField>
-                        <FormInput required minLength="8" type="text" autoComplete="password" placeholder="Confirm Password" value={confirmPw} onChange={handleConfirmChange}></FormInput>
+                        <FormInput required minLength="8" autocomplete="new-password" type="text"  placeholder="Confirm Password" defaultValue={confirmPw}  onBlur={handlePwConfirmInputChange}></FormInput>
                     </> }
                 </> :
                 <>
                     <FormField>Verification Code</FormField>
-                    <FormInput required type="text" value={verification} onChange={e => setVerification(e.target.value)}/>
+                    <FormInput required type="text" autocomplete="new-password" defaultValue={verification}  onBlur={handleVerificationChange}/>
                 </>
                 }
             </>
@@ -121,20 +138,13 @@ const AuthForm = () => {
             <HeadLineText />
             <form>
                 <ConditionalFields />
-                <div className={`py-5 w-full my-5`}>
-                    <SubmitButton  onClick={(e) => isConfirming ? handleConfirm(e) : isSigningUp ? handleSignUp : handleSignIn(e)}>
+                <ButtonContainer>
+                    <SubmitButton  type="button" onClick={(e) => isConfirming ? handleConfirm(e) : isSigningUp ? handleSignUp : handleSignIn(e)}>
                         <ConditionalButtonContent />
                     </SubmitButton>
-                </div>
+                </ButtonContainer>
             </form>
         </div>
     )
 }
-
 export default AuthForm;
-
-
-
-
-
-

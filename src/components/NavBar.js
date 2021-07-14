@@ -13,7 +13,6 @@ const NavBar =  () => {
     const setLoggedIn = async () => {
         await Auth.signOut() ;
         setAuthed(null);
-
     }
     return (
         <Container>

@@ -7,9 +7,7 @@ import { FaPlus } from 'react-icons/fa'
 import { AuthContext } from '../../AuthContext';
 import TextBoxBody from '../TextBoxBody';
 import AuthForm from '../AuthForm';
-
-
-
+import SignUp from '../SignUp';
 
 const MainContentContainer = () => {
     const { authed, setAuthed } = useContext(AuthContext)
@@ -29,6 +27,7 @@ const MainContentContainer = () => {
                 <IconStyle onClick={() => alert("bismillah")} ><FaPlus/></IconStyle>
             </PlusContainer>
     )
+
     const MainContentContainer = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
     const RightSide = tw.div`w-2/3 bg-gray-100 flex-1 p-10`;
     const LeftSide = tw.div`transition-width duration-500  ease p-10  bg-gray-200 shadow-2xl border border-gray-200 flex-none`
@@ -42,7 +41,7 @@ const MainContentContainer = () => {
                 {drawerOpen && <><LinksContainer /><PlusIconButton /></>}
             </LeftSide>
             <RightSide>
-                { authed ? <TextBoxBody /> : <AuthForm /> }
+                { authed ? <TextBoxBody /> : <SignUp /> }
             </RightSide>
         </MainContentContainer>
     )
