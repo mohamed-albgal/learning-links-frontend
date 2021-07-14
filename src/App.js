@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { AuthContext }  from './AuthContext';
 import NavBar from './components/NavBar'
-import MainContentContainer from './components/containers/MainContentContainer'
+import MainContent from './components/containers/MainContent'
 import { Switch, Route } from 'react-router-dom';
 
 const App = () => {
@@ -24,7 +24,7 @@ const App = () => {
     <>
       <AuthContext.Provider value={{ authed, setAuthed }} > 
         <NavBar />
-        <MainContentContainer />
+        <MainContent />
       </AuthContext.Provider >
     </>
   )
