@@ -4,6 +4,7 @@ import { AuthContext }  from './AuthContext';
 import NavBar from './components/NavBar'
 import MainContent from './components/containers/MainContent'
 import { Switch, Route } from 'react-router-dom';
+import AuthForm from './components/AuthForm';
 
 const App = () => {
   const [authed, setAuthed] = useState(null);
@@ -24,7 +25,14 @@ const App = () => {
     <>
       <AuthContext.Provider value={{ authed, setAuthed }} > 
         <NavBar />
-        <MainContent />
+        <Switch>
+          <Route exact path='/'>
+            <MainContent />
+          </Route>
+          <Route exact path='signin'>
+            <AuthForm />
+          </Route>
+        </Switch>
       </AuthContext.Provider >
     </>
   )
