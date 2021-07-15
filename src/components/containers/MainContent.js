@@ -4,19 +4,15 @@ import LinksContainer from './LinksContainer';
 import { BsFillCaretLeftFill } from 'react-icons/bs'
 import { BsFillCaretRightFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
-import { AuthContext } from '../../AuthContext';
 import TextBoxBody from '../TextBoxBody';
-import AuthForm from '../AuthForm';
-import SignUp from '../SignUp';
 
 const MainContentContainer = () => {
-    const { authed, setAuthed } = useContext(AuthContext)
-    const [drawerOpen, setDrawerOpen] = useState(authed);
+    const [drawerOpen, setDrawerOpen] = useState(true);
     
     const DrawerIcon = () => {
         return (
             <ArrowContainer>
-                { authed && <IconStyle onClick={() => setDrawerOpen(!drawerOpen)}>
+                 <IconStyle onClick={() => setDrawerOpen(!drawerOpen)}>
                     { !drawerOpen ? < BsFillCaretRightFill /> : <BsFillCaretLeftFill />}</IconStyle>}
             </ArrowContainer>
         )
@@ -34,6 +30,7 @@ const MainContentContainer = () => {
     const PlusContainer = tw.div`py-5 text-center`
     const ArrowContainer = tw.div`text-right -mr-6 -mt-8 mb-10 `
     const IconStyle = tw.button`text-gray-800 text-4xl`
+
     return (
         <MainContentContainer>
             <LeftSide className={` ${ drawerOpen ? "w-1/3" : "w-0"}} `}>
@@ -41,7 +38,7 @@ const MainContentContainer = () => {
                 {drawerOpen && <><LinksContainer /><PlusIconButton /></>}
             </LeftSide>
             <RightSide>
-                { authed ? <TextBoxBody /> : <SignUp /> }
+                 <TextBoxBody />
             </RightSide>
         </MainContentContainer>
     )

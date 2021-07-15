@@ -23,6 +23,7 @@ const App = () => {
   //     console.log("error checking for the user's session");
   //   }
   // }
+
   return (
     <>
       <AuthContext.Provider value={{ authed, setAuthed }} > 
@@ -33,6 +34,9 @@ const App = () => {
           </Route>
           <Route exact path='/signin'>
             <SignIn />
+          </Route>
+          <Route exact path='/signup'>
+            <SignUp />
           </Route>
         </Switch>
       </AuthContext.Provider >
