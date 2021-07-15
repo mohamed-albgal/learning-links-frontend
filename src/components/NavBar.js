@@ -3,7 +3,7 @@ import tw from 'twin.macro';
 import Button from './Button'
 import { AuthContext } from '../AuthContext';
 import { Auth } from 'aws-amplify';
-import { GiLinkedRings, GiQuillInk } from "react-icons/gi"
+import {  GiQuillInk } from "react-icons/gi"
 
 const Container = tw.div`w-full fixed h-20 top-0 px-6 pt-4 bg-gray-800 z-40`
 const Content = tw.div`flex flex-row-reverse p-1`
@@ -25,7 +25,7 @@ const NavBar =  () => {
                         <ButtonContent>Sign Out</ButtonContent>
                     </NavButton>
                 }
-                <NameTag>Signed In As Mohamed Albgal</NameTag>
+                <NameTag>{authed?`Signed in as  ${authed['email']}`:"Sign in to begin a new learning journey"}</NameTag>
                 <LinkLogoContainer>
                     <GiQuillInk className={`text-5xl text-yellow-400`}/>
                 </LinkLogoContainer>

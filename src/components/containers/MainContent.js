@@ -5,6 +5,7 @@ import { BsFillCaretLeftFill } from 'react-icons/bs'
 import { BsFillCaretRightFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
 import TextBoxBody from '../TextBoxBody';
+import { AuthContext } from '../../AuthContext';
 
 const MainContentContainer = () => {
     const [drawerOpen, setDrawerOpen] = useState(true);
