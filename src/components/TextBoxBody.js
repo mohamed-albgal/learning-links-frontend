@@ -1,14 +1,18 @@
 import React from 'react'
+import tw from 'twin.macro'
 import Button from './Button'
 
+const TextAreaContainer = tw.div`mx-auto`
+const TextArea = tw.textarea`mx-auto px-20 w-11/12`
 const TextBoxBody = () => {
     return (
-        <div>
-            text box body will go here
-            <textarea rows="40" cols="50">
-            </textarea>
-            <Button>Save Note</Button>
-        </div>
+        <TextAreaContainer>            
+            <TextArea rows="30">
+                
+            </TextArea>
+        </TextAreaContainer>
+
+            
     )
 }
 

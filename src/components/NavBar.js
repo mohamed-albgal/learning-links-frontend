@@ -3,11 +3,14 @@ import tw from 'twin.macro';
 import Button from './Button'
 import { AuthContext } from '../AuthContext';
 import { Auth } from 'aws-amplify';
+import { GiLinkedRings, GiQuillInk } from "react-icons/gi"
 
 const Container = tw.div`w-full fixed h-20 top-0 px-6 pt-4 bg-gray-800 z-40`
 const Content = tw.div`flex flex-row-reverse p-1`
 const NavButton = tw(Button)`text-lg h-10 w-24`
 const ButtonContent = tw.p`p-1`
+const NameTag = tw.p`text-white p-1 mx-14 tracking-wide font-thin text-xl`
+const LinkLogoContainer = tw.div` flex-none  items-start -my-1 ml-5 mr-auto `
 const NavBar =  () => {
     const { authed, setAuthed } = useContext(AuthContext);
     const setLoggedIn = async () => {
@@ -17,7 +20,15 @@ const NavBar =  () => {
     return (
         <Container>
             <Content>
-                { authed && <NavButton onClick={ () => setLoggedIn()}><ButtonContent>Sign Out</ButtonContent></NavButton>}
+                { authed && 
+                    <NavButton onClick={ () => setLoggedIn()}>
+                        <ButtonContent>Sign Out</ButtonContent>
+                    </NavButton>
+                }
+                <NameTag>Signed In As Mohamed Albgal</NameTag>
+                <LinkLogoContainer>
+                    <GiQuillInk className={`text-5xl text-yellow-400`}/>
+                </LinkLogoContainer>
             </Content>
 
         </Container>
