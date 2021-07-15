@@ -35,8 +35,6 @@ const SignIn = () => {
             setAuthed({id:user.id, username:user.username, email: user.attributes.email});
             setLoading(false);
             setError("");
-
-            history.push('/');
         }catch(e){
             setLoading(false);
             setError(e.message);
