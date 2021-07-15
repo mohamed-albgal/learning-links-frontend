@@ -73,7 +73,7 @@ const SignUp = () => {
                         !isConfirming ?
                         <form onSubmit={handleSignUpSubmit} autoComplete="off">
                             <FormHeadLine tw="inline-block">Sign Up</FormHeadLine>
-                            <FormHeadLine tw="inline-block ml-2 ">or<Link to="/SignIn" tw=" inline-block ml-3 tracking-wide text-purple-600 " >Sign In</Link></FormHeadLine>
+                            <FormHeadLine tw="inline-block ml-2 font-semibold ">or<Link to="/SignIn" tw=" inline-block ml-3 tracking-wide text-purple-600 " >Sign In</Link></FormHeadLine>
                             <FormField>Email</FormField>
                             <FormInput required  autocomplete="off" type="email" placeholder="Email"  defaultValue={email}  onChange={e => (email = e.target.value)}/>
                             <FormField>Password</FormField>

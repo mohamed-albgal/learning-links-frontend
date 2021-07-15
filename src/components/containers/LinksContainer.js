@@ -24,4 +24,10 @@ const LinksContainer = ({drawerOpen}) => {
 
 export default LinksContainer
 
-//https://react-icons.github.io/react-icons/icons?name=ri
+
+/**
+ * 
+ * query for each item for the authed user
+ *  for each item, create a link item, tie to the add button 
+ * 
+ */
