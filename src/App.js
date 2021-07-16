@@ -11,7 +11,7 @@ const App = () => {
   const [authed, setAuthed] = useState(null);
   useEffect ( () => {
     !authed && checkUserSession();
-  },[])
+  },[authed])
 
   const checkUserSession = async () => {
     try {

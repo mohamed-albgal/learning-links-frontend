@@ -1,36 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import tw from 'twin.macro';
-import { AuthContext  } from '../../AuthContext';
-import {API} from 'aws-amplify'
+import tw, { styled } from 'twin.macro';
+import {API, navItem} from 'aws-amplify'
 import { FaPlus } from 'react-icons/fa'        
+import Button from '../Button';
+import { GiConsoleController } from 'react-icons/gi';
 
 
-const LinkItem = ({title, linkId}) => {
-    return (
-        <div tw="w-full bg-indigo-400 hover:scale-150 rounded-sm p-4 my-3">
-            <div tw="h-10 w-full">
-                {title}
-            </div>
-        </div>
-    )
-}
+const dummyLinks = [
+      {
+        id: 0,
+        title: " Learning Linux",
+        body: "Linux is a nice OS\n learning it is beneficial",
+        goals: 6,
+        completedGoals: 1, 
+    },   
+    {
+        id: 1,
+        title: "AWS Certified Associate Solutions Architect",
+        body: "I will become AWS certified because I am driven\n learning it is beneficial",
+        goals: 10,
+        completedGoals: 4, 
+        completedGoals: 4, 
+    },   
+    {
+        id: 2,
+        title: "Become a better developer",
+        body: " I know I can be better,\n I just have to remain focused and stay to the course!",
+        goals: 20,
+        completedGoals: 12, 
+        source: "",
+    },
 
-const LinksContainer = ({drawerOpen}) => {
+]
+const LinksContainer = ( { showNote }) => {
     const [ links, setLinks] = useState({});
     const [isCreating, setCreating] = useState(false);
-    useEffect(() =>{
-        //call the API as a first - render side-effect
-        const load = async () => {
-            try{
-                const links = await loadLinkData()
-                setLinks(links);
-                console.log(links);
-            }catch(e) {
-                console.log(e);
-            }
-        }    
-        load()
-    },[])
+    // useEffect(() =>{
+    //     //call the API as a first - render side-effect
+    //     const load = async () => {
+    //         try{
+    //             const links = await loadLinkData()
+    //             setLinks(links);
+    //             console.log(links);
+    //         }catch(e) {
+    //             console.log(e);
+    //         }
+    //     }    
+    //     load()
+    // },[])
+
+    const handleLinkClick = (key) => {
+        console.log(key)
+        if (dummyLinks[key]) console.log(dummyLinks[key])
+        else console.log("its undefined!!")
+    }
+    const LinkItemContainer = styled.div( () => [tw` relative border border-gray-900 w-full bg-gradient-to-r from-purple-900 to-purple-500  p-4 my-3  rounded-md`,]);
+    const LinkContent = styled.div( () => [tw`h-10 p-2 w-full font-thin text-white`] )
+    const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
+    const ProgressTick = tw.div`mr-3 h-1 w-1/6 bg-yellow-400`
+    // for every goal, map a progress tick, for every completed goal, color an existing (invisible) tick
+    const ShowButton = tw(Button)`absolute right-0 top-0 m-1 w-9 h-auto `
+    const LinkItem = ({title, itemkey }) => (
+            <LinkItemContainer key={itemkey} >
+                <LinkContent>{title}
+                <ShowButton onClick={ () => showNote(dummyLinks[itemkey]) }>
+                    &rarr;
+                </ShowButton>
+                    <ProgressBar >
+                        <ProgressTick/>
+                        <ProgressTick/>
+                        <ProgressTick/>
+                        <ProgressTick/>
+                    </ProgressBar>
+                </LinkContent>
+            </LinkItemContainer>
+    );
     const NewLinkForm = () => {
         // TODO:
         //  renders a form to collect new attributes
@@ -42,12 +86,8 @@ const LinksContainer = ({drawerOpen}) => {
         // return links["items"].map(item  => {
         //     <LinkItem key={item.id} title={item.title}/>
         // });
-        return <>
-            <LinkItem title="Learn Linux" />
-            <LinkItem title="AWS Certified Associates Exam" />
-            <LinkItem title="Arup Best Practices for engineers" />
-        
-        </>
+            return dummyLinks.map( item => <LinkItem itemkey={item.id} title={item.title} />)
+
     }
     const loadLinkData = () =>{
         return API.get("links", "/links");
