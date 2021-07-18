@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner';
+import VerificationForm from './Verification'
 import FormElements from  './FormElements';
 
 const { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
@@ -12,13 +13,10 @@ const SignUp = () => {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ confirmPw, setConfirmPw ] = useState("");
-    const [ verification, setVerification ] = useState("");
     const [ isLoading, setLoading] = useState(false);
     const [ isConfirming, setConfirming ] = useState(false);
     const [ error, setError] = useState("");
-    const { setAuthed } = useContext(AuthContext);
-    const history = useHistory();
-    
+
     const handleSignUpSubmit = async e => {
         e.preventDefault()
         setLoading(true);
@@ -31,21 +29,6 @@ const SignUp = () => {
             setError("");
             setConfirming(true);
         }catch(e) {
-            setLoading(false);
-            setError(e.message);
-        }
-    }
-    const handleVerificationSubmit = async e => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await Auth.confirmSignUp(email, verification)
-            await Auth.signIn(email,password);
-            const user = await Auth.currentUserInfo();
-            setAuthed({id:user.id, username:user.username, email:user.attributes.email})
-            setLoading(false);
-            history.push('/');
-        }catch(e){
             setLoading(false);
             setError(e.message);
         }
@@ -69,14 +52,8 @@ const SignUp = () => {
                                 <SubmitButton  type="submit">{!isLoading ? "Submit" : <Spinner/>}</SubmitButton>
                             </ButtonContainer>
                         </form> :
-                        <form autoComplete="off" onSubmit={handleVerificationSubmit}>
-                            <HeadLine>{`Enter the Verification Code send to ${email}`} </HeadLine>
-                            <Field>Verification Code</Field>
-                            <Input required minLength="8" autocomplete="off" type="text" placeholder="Verification Code"  value={verification}  onChange={e => setVerification(e.target.value)}/>
-                            <ButtonContainer>
-                                <SubmitButton  type="submit">{!isLoading ? "Verify" : <Spinner/>}</SubmitButton>
-                            </ButtonContainer>
-                        </form>
+                        <VerificationForm email={email} password={password} />
+
                     }
                 </Container>
     )
