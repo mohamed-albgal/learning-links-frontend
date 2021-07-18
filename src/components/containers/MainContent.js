@@ -1,37 +1,74 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import tw, { styled } from 'twin.macro'
-import LinksContainer from './LinksContainer';
-import { BsFillCaretLeftFill } from 'react-icons/bs'
-import { BsFillCaretRightFill } from 'react-icons/bs'
-import TextBoxBody from '../TextBoxBody';
+import RightSide from './RightSide'
+import LeftSide from './LeftSide';
 
-const MainContentContainer = () => {
-    const [drawerOpen, setDrawerOpen] = useState(true);
-    const [noteInFocus, setNoteInFocus] = useState({});
+const dummyLinks = [
+    {
+      id: 0,
+      title: " Learning Linux",
+      body: "Linux is a nice OS\n learning it is beneficial",
+      goals: 6,
+      completedGoals: 1, 
+  },   
+  {
+      id: 1,
+      title: "AWS Certified Associate Solutions Architect",
+      body: "I will become AWS certified because I am driven\n learning it is beneficial",
+      goals: 10,
+      completedGoals: 4, 
+      completedGoals: 4, 
+  },   
+  {
+      id: 2,
+      title: "Become a better developer",
+      body: " I know I can be better,\n I just have to remain focused and stay to the course!",
+      goals: 20,
+      completedGoals: 12, 
+      source: "",
+  },
+
+]
+
+export default () => {
+    const [noteBody, setNoteBody] = useState("");
+    const [noteTitle, setNoteTitle] = useState("");
+    const [selectedNote, setSelectedNote] = useState(null);
+    const [links, setLinks] = useState([]);
+
+    useEffect( () => {
+        setLinks(dummyLinks.map(link => {
+            return (
+                { id: link.id, title: link.title }
+            )
+        }));
+        
+
+    },[dummyLinks]);
+    /**
+     * 
+     * main content should call the backend. pass the title of each link to the left side
+     * and pass the note title and body, and questions to the right side.
+     * i guess here the state CAN be an object since once its updated, that needs to be sent back to the backend
+     */
+    const handleSelectedNote = (id) => {
+        setSelectedNote(links[id]);
+        setNoteBody(links[id].body);
+        setNoteTitle(links[id].title);
+    }
+
     
     const MainContentContainer = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
-    const RightSide = tw.div`w-2/3 bg-gray-100 flex-1 p-10`;
-    const LeftSide = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
-            tw`transition-width duration-100 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
-        ]
-    );
-    const Arrow = tw.button`text-gray-800 border  border-gray-400 m-1 mr-6 shadow-md bg-gray-100 rounded-md text-4xl`
-    const ArrowContainer = tw.div`text-right w-auto -mr-6 -mt-8 mb-1 hover:translate-x-6`
+    const handleUpdateNote = (body) => {
+        console.log("Update note body handled at parent!", body);
+    }
+    
 
     return (
-        <MainContentContainer className={`${!drawerOpen ? "w-0" : "w-full"}`}>
-            <LeftSide >
-                <ArrowContainer>
-                    <Arrow onClick={() => setDrawerOpen(!drawerOpen)}>
-                        { !drawerOpen ? < BsFillCaretRightFill /> : <BsFillCaretLeftFill />}</Arrow>
-                </ArrowContainer>
-                {drawerOpen && <LinksContainer showNote={setNoteInFocus}/>}
-            </LeftSide>
-            <RightSide>
-                 <TextBoxBody note={noteInFocus} />
-            </RightSide>
+        <MainContentContainer >
+            <LeftSide linkData={links} onLinkSelect={handleSelectedNote}  />
+            <RightSide noteBody={noteBody} noteTitle={noteTitle} onNoteBodyChange={handleUpdateNote}  />
         </MainContentContainer>
     )
 }
 
-export default MainContentContainer;
