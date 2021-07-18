@@ -33,38 +33,30 @@ const dummyLinks = [
 export default () => {
     const [selectedNote, setSelectedNote] = useState({});
     const [links, setLinks] = useState([]);
-
+    
     useEffect( () => {
         setLinks(dummyLinks.map(link => {
             return (
                 { id: link.id, title: link.title }
-            )
-        }));
+                )
+            }));
+            
+        },[dummyLinks]);
+
+        const Container = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
         
-
-    },[dummyLinks]);
-    /**
-     * 
-     * main content should call the backend. pass the title of each link to the left side
-     * and pass the note title and body, and questions to the right side.
-     * i guess here the state CAN be an object since once its updated, that needs to be sent back to the backend
-     */
-    const handleSelectedNote = (id) => {
-        console.log('parent sees you selected :', id)
-        console.log('with a value of : ', links[id])
-        setSelectedNote(dummyLinks[id]);
-    }
-
-    const MainContentContainer = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
-    const handleUpdateNote = (body) => {
-        console.log("Update note body handled at parent!", body);
-        setSelectedNote( prev => ({ ...prev, body}))
-    }
-
+        const handleSelectedNote = (id) => {
+            setSelectedNote(dummyLinks[id]);
+        }
+        
+        const handleUpdateNote = (body) => {
+            setSelectedNote( prev => ({ ...prev, body}))
+        }
+        
     return (
-        <MainContentContainer >
+        <Container >
             <LeftSide linkData={links} onLinkSelect={handleSelectedNote}  />
             <RightSide linkData={selectedNote} onNoteBodyChange={handleUpdateNote}  />
-        </MainContentContainer>
+        </Container>
     )
 }
