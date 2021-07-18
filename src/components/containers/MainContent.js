@@ -31,9 +31,7 @@ const dummyLinks = [
 ]
 
 export default () => {
-    const [noteBody, setNoteBody] = useState("");
-    const [noteTitle, setNoteTitle] = useState("");
-    const [selectedNote, setSelectedNote] = useState(null);
+    const [selectedNote, setSelectedNote] = useState({});
     const [links, setLinks] = useState([]);
 
     useEffect( () => {
@@ -52,23 +50,21 @@ export default () => {
      * i guess here the state CAN be an object since once its updated, that needs to be sent back to the backend
      */
     const handleSelectedNote = (id) => {
-        setSelectedNote(links[id]);
-        setNoteBody(links[id].body);
-        setNoteTitle(links[id].title);
+        console.log('parent sees you selected :', id)
+        console.log('with a value of : ', links[id])
+        setSelectedNote(dummyLinks[id]);
     }
 
-    
     const MainContentContainer = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
     const handleUpdateNote = (body) => {
         console.log("Update note body handled at parent!", body);
+        setSelectedNote( prev => ({ ...prev, body}))
     }
-    
 
     return (
         <MainContentContainer >
             <LeftSide linkData={links} onLinkSelect={handleSelectedNote}  />
-            <RightSide noteBody={noteBody} noteTitle={noteTitle} onNoteBodyChange={handleUpdateNote}  />
+            <RightSide linkData={selectedNote} onNoteBodyChange={handleUpdateNote}  />
         </MainContentContainer>
     )
 }
-

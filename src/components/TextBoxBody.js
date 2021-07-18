@@ -18,7 +18,7 @@ const TextBoxBody = ( {body, title, updateBody} ) => {
             <NoteTitle >{title}</NoteTitle>
             <TextAreaContainer>            
                 <TextArea value={textContent} onChange={e => setTextContent(e.target.value)}     />
-                <CommitButton onClick={ e => alert(textContent)} >Save Changes</CommitButton>
+                <CommitButton onClick={ e => updateBody(textContent)} >Save Changes</CommitButton>
             </TextAreaContainer>
         </>
     )
