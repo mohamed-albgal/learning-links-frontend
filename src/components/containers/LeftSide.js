@@ -15,7 +15,7 @@ const PlusButton = tw(Icon)`text-gray-800 p-1 rounded-full text-3xl`
 export default ({ linkData, onLinkSelect }) => {
     const [drawerOpen, setDrawerOpen] = useState(true);
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
-            tw`transition-width duration-100 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
+            tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
         ]
     );
 

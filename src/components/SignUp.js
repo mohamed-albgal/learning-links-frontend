@@ -1,19 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { Auth } from 'aws-amplify';
-import Button from './Button';
-import tw from 'twin.macro';
 import Spinner from './Spinner';
+import FormElements from  './FormElements';
 
-const FormField = tw.label`text-sm block p-2 my-2 text-gray-900`
-const FormInput = tw.input`shadow bg-purple-100 appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-inner`;
-const SubmitButton = tw(Button)`text-lg font-thin tracking-wide h-10 w-24 mr-3`
-const ButtonContainer = tw.div`py-5 w-full my-5`
-const FormHeadLine = tw.p`tracking-wide text-2xl mt-8 mb-4 font-light text-gray-900`
-const ClickableHeadLine = tw(FormHeadLine)`ml-2 font-semibold`
-const FormContainer = tw.div`mt-40 max-w-xl mx-auto bg-gray-100 p-10`;
-const ErrorMessage = tw.p`px-10 text-red-400 p-0`
+const { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
+    Container, ErrorMessage, RedirectingLink } = FormElements;
 
 const SignUp = () => {
     const [ email, setEmail ] = useState("");
@@ -57,43 +50,36 @@ const SignUp = () => {
             setError(e.message);
         }
     }
-    
 
     return (
-        <>
-            <div className={` px-32 `}>
-                <FormContainer>
+                <Container>
                 { (error && error.length) && <ErrorMessage>{error + " Please try again"}</ErrorMessage> }
                     {
                         !isConfirming ?
                         <form onSubmit={handleSignUpSubmit} autoComplete="off">
-                            <FormHeadLine tw="inline-block">Sign Up</FormHeadLine>
-                            <ClickableHeadLine tw="inline-block ml-2 font-semibold ">or<Link to="/SignIn" tw=" inline-block ml-3 tracking-wide text-purple-600 " >Sign In</Link></ClickableHeadLine>
-                            <FormField>Email</FormField>
-                            <FormInput required  autocomplete="off" type="email" placeholder="Email"  value={email}  onChange={e => setEmail(e.target.value)}/>
-                            <FormField>Password</FormField>
-                            <FormInput required minLength="8" autocomplete="off" type="password" placeholder="Password"  value={password}  onChange={e =>setPassword(e.target.value)} />
-                            <FormField>Confirm Password</FormField>
-                            <FormInput required minLength="8" autocomplete="off" type="password"  placeholder="Confirm Password" value={confirmPw}  onChange={e => setConfirmPw(e.target.value)} />
+                            <HeadLine >Sign Up&nbsp; or</HeadLine>
+                            <ClickableHeadLine ><RedirectingLink to="/SignIn" >Sign In &rarr;</RedirectingLink></ClickableHeadLine>
+                            <Field>Email</Field>
+                            <Input required  autocomplete="off" type="email" placeholder="Email"  value={email}  onChange={e => setEmail(e.target.value)}/>
+                            <Field>Password</Field>
+                            <Input required minLength="8" autocomplete="off" type="password" placeholder="Password"  value={password}  onChange={e =>setPassword(e.target.value)} />
+                            <Field>Confirm Password</Field>
+                            <Input required minLength="8" autocomplete="off" type="password"  placeholder="Confirm Password" value={confirmPw}  onChange={e => setConfirmPw(e.target.value)} />
                             <ButtonContainer>
                                 <SubmitButton  type="submit">{!isLoading ? "Submit" : <Spinner/>}</SubmitButton>
                             </ButtonContainer>
                         </form> :
                         <form autoComplete="off" onSubmit={handleVerificationSubmit}>
-                            <FormHeadLine>{`Enter the Verification Code send to ${email}`} </FormHeadLine>
-                            <FormField>Verification Code</FormField>
-                            <FormInput required minLength="8" autocomplete="off" type="text" placeholder="Verification Code"  value={verification}  onChange={e => setVerification(e.target.value)}/>
+                            <HeadLine>{`Enter the Verification Code send to ${email}`} </HeadLine>
+                            <Field>Verification Code</Field>
+                            <Input required minLength="8" autocomplete="off" type="text" placeholder="Verification Code"  value={verification}  onChange={e => setVerification(e.target.value)}/>
                             <ButtonContainer>
                                 <SubmitButton  type="submit">{!isLoading ? "Verify" : <Spinner/>}</SubmitButton>
                             </ButtonContainer>
                         </form>
                     }
-                </FormContainer>
-            </div>
-        </>
+                </Container>
     )
-
-
 }
 export default SignUp;
 

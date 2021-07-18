@@ -3,7 +3,7 @@ import tw from 'twin.macro'
 import Button from './Button'
 
 const TextAreaContainer = tw.div`block mx-auto h-screen`
-const TextArea = tw.textarea`mx-auto p-10 w-11/12 h-96 max-h-screen font-mono overflow-scroll whitespace-pre-wrap`
+const TextArea = tw.textarea` block mx-auto p-10 w-11/12 h-96 max-h-screen font-mono overflow-scroll whitespace-pre-wrap`
 const NoteTitle= tw.div`text-xl font-semibold text-center`
 const CommitButton = tw(Button)`h-10 w-32 font-thin mt-6`
 
