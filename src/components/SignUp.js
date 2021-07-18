@@ -1,27 +1,33 @@
 import React, { useContext, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { Auth } from 'aws-amplify';
 import Button from './Button';
 import tw from 'twin.macro';
 import Spinner from './Spinner';
 
+const FormField = tw.label`text-sm block p-2 my-2 text-gray-900`
+const FormInput = tw.input`shadow bg-purple-100 appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-inner`;
+const SubmitButton = tw(Button)`text-lg font-thin tracking-wide h-10 w-24 mr-3`
+const ButtonContainer = tw.div`py-5 w-full my-5`
+const FormHeadLine = tw.p`tracking-wide text-2xl mt-8 mb-4 font-light text-gray-900`
+const ClickableHeadLine = tw(FormHeadLine)`ml-2 font-semibold`
+const FormContainer = tw.div`mt-40 max-w-xl mx-auto bg-gray-100 p-10`;
+const ErrorMessage = tw.p`px-10 text-red-400 p-0`
 
 const SignUp = () => {
-    let [ email, setEmail ] = useState("");
-    let [ password, setPassword ] = useState("");
-    let [ confirmPw, setConfirmPw ] = useState("");
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+    const [ confirmPw, setConfirmPw ] = useState("");
     const [ verification, setVerification ] = useState("");
     const [ isLoading, setLoading] = useState(false);
     const [ isConfirming, setConfirming ] = useState(false);
     const [ error, setError] = useState("");
-    const { authed ,setAuthed } = useContext(AuthContext);
+    const { setAuthed } = useContext(AuthContext);
+    const history = useHistory();
     
     const handleSignUpSubmit = async e => {
         e.preventDefault()
-        setEmail(email);
-        setPassword(password);
-        setConfirmPw(confirmPw);
         setLoading(true);
         try {
             if (password != confirmPw){
@@ -32,7 +38,6 @@ const SignUp = () => {
             setError("");
             setConfirming(true);
         }catch(e) {
-            console.log(e.message);
             setLoading(false);
             setError(e.message);
         }
@@ -46,19 +51,14 @@ const SignUp = () => {
             const user = await Auth.currentUserInfo();
             setAuthed({id:user.id, username:user.username, email:user.attributes.email})
             setLoading(false);
+            history.push('/');
         }catch(e){
             setLoading(false);
             setError(e.message);
         }
     }
     
-    const FormField = tw.label`text-sm block p-2 my-2 text-gray-900`
-    const FormInput = tw.input`shadow bg-purple-100 appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-inner`;
-    const SubmitButton = tw(Button)`text-lg font-thin tracking-wide h-10 w-24 mr-3`
-    const ButtonContainer = tw.div`py-5 w-full my-5`
-    const FormHeadLine = tw.p`tracking-wide text-2xl mt-8 mb-4 font-light text-gray-900`
-    const FormContainer = tw.div`mt-40 w-2/3 bg-gray-100 p-10`;
-    const ErrorMessage = tw.p`px-10 text-red-400 p-0`
+
     return (
         <>
             <div className={` px-32 `}>
@@ -68,27 +68,26 @@ const SignUp = () => {
                         !isConfirming ?
                         <form onSubmit={handleSignUpSubmit} autoComplete="off">
                             <FormHeadLine tw="inline-block">Sign Up</FormHeadLine>
-                            <FormHeadLine tw="inline-block ml-2 font-semibold ">or<Link to="/SignIn" tw=" inline-block ml-3 tracking-wide text-purple-600 " >Sign In</Link></FormHeadLine>
+                            <ClickableHeadLine tw="inline-block ml-2 font-semibold ">or<Link to="/SignIn" tw=" inline-block ml-3 tracking-wide text-purple-600 " >Sign In</Link></ClickableHeadLine>
                             <FormField>Email</FormField>
-                            <FormInput required  autocomplete="off" type="email" placeholder="Email"  defaultValue={email}  onChange={e => (email = e.target.value)}/>
+                            <FormInput required  autocomplete="off" type="email" placeholder="Email"  value={email}  onChange={e => setEmail(e.target.value)}/>
                             <FormField>Password</FormField>
-                            <FormInput required minLength="8" autocomplete="off" type="password" placeholder="Password"  defaultValue={password}  onChange={e => password = e.target.value} />
+                            <FormInput required minLength="8" autocomplete="off" type="password" placeholder="Password"  value={password}  onChange={e =>setPassword(e.target.value)} />
                             <FormField>Confirm Password</FormField>
-                            <FormInput required minLength="8" autocomplete="off" type="password"  placeholder="Confirm Password" defaultValue={confirmPw}  onChange={e => confirmPw = e.target.value} />
+                            <FormInput required minLength="8" autocomplete="off" type="password"  placeholder="Confirm Password" value={confirmPw}  onChange={e => setConfirmPw(e.target.value)} />
                             <ButtonContainer>
                                 <SubmitButton  type="submit">{!isLoading ? "Submit" : <Spinner/>}</SubmitButton>
                             </ButtonContainer>
                         </form> :
                         <form autoComplete="off" onSubmit={handleVerificationSubmit}>
-                            <FormHeadLine>{`Enter the verification Code send to ${email}`} </FormHeadLine>
-                            <FormField>Validation Code</FormField>
-                            <FormInput required minLength="8" autocomplete="off" type="text" placeholder="Verification Code"  defaultValue={verification}  onBlur={e => setVerification(e.target.value)}/>
+                            <FormHeadLine>{`Enter the Verification Code send to ${email}`} </FormHeadLine>
+                            <FormField>Verification Code</FormField>
+                            <FormInput required minLength="8" autocomplete="off" type="text" placeholder="Verification Code"  value={verification}  onChange={e => setVerification(e.target.value)}/>
                             <ButtonContainer>
                                 <SubmitButton  type="submit">{!isLoading ? "Verify" : <Spinner/>}</SubmitButton>
                             </ButtonContainer>
                         </form>
                     }
-                    { authed && <Redirect to="/" />}
                 </FormContainer>
             </div>
         </>
