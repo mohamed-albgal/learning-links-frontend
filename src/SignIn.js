@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useHistory, Link, Redirect } from 'react-router-dom';
-import { AuthContext } from '../Contexts';
+import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner';
 import FormElements from './FormElements';
@@ -13,7 +13,7 @@ const SignIn = () => {
     const [ password, setPassword ] = useState("");
     const [ isLoading, setLoading] = useState(false);
     const [ error, setError ] = useState("");
-    const { setAuthed } = useContext(AuthContext);
+    const { setAuthed } = useContext(Contexts);
     const history = useHistory();
 
 

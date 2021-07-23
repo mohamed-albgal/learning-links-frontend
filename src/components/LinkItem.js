@@ -5,7 +5,7 @@ const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
 const ProgressTick = tw.div`mr-3 h-1 w-1/6 bg-yellow-400`
 
 //takes teh title, id and a callback function for what to do when a certain link has been selected
-export default ({title, itemKey, onSelect }) => {
+const LinkItem =  ({ title, itemKey, onSelect }) => {
 
     // TODO: for every goal, map a progress tick, for every completed goal, color an existing (invisible) tick
     // const ShowButton = tw(Button)`absolute right-0 top-0 m-1 w-9 h-auto `
@@ -22,4 +22,5 @@ export default ({title, itemKey, onSelect }) => {
                 </Content>
             </Container>
     )
-}
+};
+export default LinkItem;

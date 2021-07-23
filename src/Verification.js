@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../Contexts';
+import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner'
 import FormElements from  './FormElements';
@@ -11,7 +11,7 @@ export default({ email, password }) => {
     const [ verification, setVerification ] = useState("");
     const [ isLoading, setLoading] = useState(false)
     const [ error, setError] = useState("");
-    const { setAuthed } = useContext(AuthContext);
+    const { setAuthed } = useContext(Contexts);
     const history = useHistory();
 
     const handleVerificationSubmit = async e => {

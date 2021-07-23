@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import tw from 'twin.macro'
+import { LinkContext } from '../Contexts'
 import Button from './Button'
 
 const TextAreaContainer = tw.div`block mx-auto h-screen`
@@ -7,15 +8,23 @@ const TextArea = tw.textarea` block mx-auto p-10 w-11/12 h-96 max-h-screen font-
 const NoteTitle= tw.div`text-xl font-semibold text-center`
 const CommitButton = tw(Button)`h-10 w-32 font-thin mt-6`
 
-const TextBoxBody = ( {body, title, updateBody} ) => {
-    const [textContent, setTextContent] = useState(body);
+const TextBoxBody = () => {
+    const { linksState, dispatchLinkActions } = useContext(LinkContext)
+    const [ body, setBody ] = useState(linksState.links[linksState.displayed].body)
+    // useEffect(() => {
+    //     console.log("changed?")
+    // },[linksState])
 
+    const updateText = (e) => {
+        e.preventDefault()
+        dispatchLinkActions({ type: "updateLink", payload:{ body }})
+    }
     return (
         <>
-            <NoteTitle >{title}</NoteTitle>
+            <NoteTitle >{linksState.links[linksState.displayed].title}</NoteTitle>
             <TextAreaContainer>            
-                <TextArea value={textContent} onChange={e => setTextContent(e.target.value)}     />
-                <CommitButton onClick={ e => updateBody(textContent)} >Save Changes</CommitButton>
+                <TextArea value={body} onChange={e => setBody(e.target.value)}     />
+                <CommitButton onClick={updateText} >Save Changes</CommitButton>
             </TextAreaContainer>
         </>
     )
