@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { useHistory, Link, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner';
-import FormElements from './FormElements';
-
-const { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
-    Container, ErrorMessage, RedirectingLink } = FormElements
+import { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
+    Container, ErrorMessage, RedirectingLink } from './FormElements'
 
 const SignIn = () => {
     const [ email, setEmail ] = useState("");

@@ -1,13 +1,9 @@
-import React, { useContext, useState } from 'react'
-import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../Contexts';
+import React, { useState } from 'react'
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner';
 import VerificationForm from './Verification'
-import FormElements from  './FormElements';
-
-const { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
-    Container, ErrorMessage, RedirectingLink } = FormElements;
+import { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
+    Container, ErrorMessage, RedirectingLink } from  './FormElements';
 
 const SignUp = () => {
     const [ email, setEmail ] = useState("");
@@ -21,7 +17,7 @@ const SignUp = () => {
         e.preventDefault()
         setLoading(true);
         try {
-            if (password != confirmPw){
+            if (password !== confirmPw){
                 throw new Error("The passwords don't match");
             }
             await Auth.signUp({ username: email, password: password});

@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import tw from 'twin.macro'
-import { LinkContext } from '../Contexts'
+import { SelectedLinkContext } from '../Contexts'
 import Button from './Button'
-import { SelectedLinkContext } from './containers/LeftSide'
 
 const TextAreaContainer = tw.div`block mx-auto h-screen`
 const TextArea = tw.textarea` block mx-auto p-10 w-11/12 h-96 max-h-screen font-mono overflow-scroll whitespace-pre-wrap`

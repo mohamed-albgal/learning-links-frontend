@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import tw, { styled } from 'twin.macro'
+import tw from 'twin.macro'
 import LeftSide from './LeftSide';
 import { LinkContext } from '../../Contexts';
 import { linkReducer, initialLinkState } from '../../reducers/linkReducers'

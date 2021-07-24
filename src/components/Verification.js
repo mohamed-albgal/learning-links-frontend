@@ -3,11 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner'
-import FormElements from  './FormElements';
+import { HeadLine, Field, Input, SubmitButton, ButtonContainer, ErrorMessage } from './FormElements';
 
-const { HeadLine, Field, Input, SubmitButton, ButtonContainer, ErrorMessage } = FormElements;
-
-export default({ email, password }) => {
+const Verification = ({ email, password }) => {
     const [ verification, setVerification ] = useState("");
     const [ isLoading, setLoading] = useState(false)
     const [ error, setError] = useState("");
@@ -43,3 +41,4 @@ export default({ email, password }) => {
         </>
     )
 }
+export default Verification;

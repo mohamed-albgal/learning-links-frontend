@@ -15,7 +15,6 @@ const dummyLinks = [
       body: "I will become AWS certified because I am driven\n learning it is beneficial",
       goals: 10,
       completedGoals: 4, 
-      completedGoals: 4, 
       source: "",
   },   
 
@@ -36,7 +35,7 @@ export const linkReducer = (state, action) => {
             let mutation = action.payload.link
             let links = [ ...state.links ]
             //find the one with this id
-            let index = links.findIndex(x => x.id == mutation.id)
+            let index = links.findIndex(x => x.id === mutation.id)
             if (index < 0) Error("how can the incoming mutated link not be present in the original list of links (index not found when calling reducer)?")
             // replace it with the mutated link
             links[index] = mutation

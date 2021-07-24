@@ -1,19 +1,18 @@
-import React, { useState, useContext, createContext,useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import tw, { styled } from 'twin.macro';
 import { FaPlus } from 'react-icons/fa'        
 import { BsFillCaretLeftFill } from 'react-icons/bs'
 import { BsFillCaretRightFill } from 'react-icons/bs'
-import { LinkContext } from '../../Contexts';
+import { LinkContext, SelectedLinkContext } from '../../Contexts';
 import LinkItem from '../LinkItem';
 import RightSide from './RightSide';
 
-export const SelectedLinkContext = createContext()
 let open = true
-let index = 0
+let index =-1 
 
 const LeftSide =  () => {
-    const { linksState, dispatchLinkActions } = useContext(LinkContext)
-    const [ selected, setSelected] = useState(linksState.links[index]);
+    const { linksState } = useContext(LinkContext)
+    const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
         tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
@@ -23,8 +22,8 @@ const LeftSide =  () => {
     },[drawerOpen])
 
     useEffect(() => {
-        index = linksState.links.findIndex(x => x.id == selected.id) 
-    },[selected])
+        index = linksState.links.findIndex(x => x.id === selected.id) 
+    },[selected, linksState.links])
 
     const onLinkSelect = (id) => {
         setSelected(linksState.links[id]);
