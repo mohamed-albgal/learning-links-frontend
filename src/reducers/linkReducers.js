@@ -1,6 +1,6 @@
 
 const dummyLinks = [
-    {
+      {
       id: 0,
       title: " Learning Linux",
       body: "Linux is a nice OS\n learning it is beneficial",
@@ -20,6 +20,56 @@ const dummyLinks = [
 
   {
       id: 2,
+      title: "Become a better developer",
+      body: " I know I can be better,\n I just have to remain focused and stay to the course!",
+      goals: 20,
+      completedGoals: 12, 
+      source: "",
+  },   {
+      id: 3,
+      title: " Learning Linux",
+      body: "Linux is a nice OS\n learning it is beneficial",
+      goals: 6,
+      completedGoals: 1, 
+      source: "",
+  },   
+
+  {
+      id: 4,
+      title: "AWS Certified Associate Solutions Architect",
+      body: "I will become AWS certified because I am driven\n learning it is beneficial",
+      goals: 10,
+      completedGoals: 4, 
+      source: "",
+  },   
+
+  {
+      id: 5,
+      title: "Become a better developer",
+      body: " I know I can be better,\n I just have to remain focused and stay to the course!",
+      goals: 20,
+      completedGoals: 12, 
+      source: "",
+  },   {
+      id: 6,
+      title: " Learning Linux",
+      body: "Linux is a nice OS\n learning it is beneficial",
+      goals: 6,
+      completedGoals: 1, 
+      source: "",
+  },   
+
+  {
+      id: 7,
+      title: "AWS Certified Associate Solutions Architect",
+      body: "I will become AWS certified because I am driven\n learning it is beneficial",
+      goals: 10,
+      completedGoals: 4, 
+      source: "",
+  },   
+
+  {
+      id: 8,
       title: "Become a better developer",
       body: " I know I can be better,\n I just have to remain focused and stay to the course!",
       goals: 20,

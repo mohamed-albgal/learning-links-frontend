@@ -1,26 +1,52 @@
+import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
+import { LinkContext } from '../Contexts';
+
 const Container = styled.div( () => [tw` relative border border-gray-900 w-full bg-gradient-to-r from-purple-900 to-purple-500  p-4 my-3  rounded-md`,]);
-const Content = styled.button( () => [tw`h-10 p-2 w-full font-thin text-white`] )
+const Content = styled.button( () => [tw`min-h-full p-2 w-full font-thin text-white`] )
 const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
+const FormContainer = tw.div`w-full p-1  overflow-scroll`
+const FormInput = tw.input`block bg-gray-50 px-2 w-3/4 mx-auto`
+const FormLabel = tw.label`block text-left px-2 w-3/4 mx-auto  text-white font-thin text-xs`
 const ProgressTick = tw.div`mr-3 h-1 w-1/6 bg-yellow-400`
 const LinkTitle = tw.p`font-semibold`
+const LinkModication = () => {
+    return (
+        <>
+        <FormContainer>
+            <FormLabel >Title</FormLabel>
+            <FormInput />
+            <FormLabel >Goals</FormLabel>
+            <FormInput />
+            <FormLabel >Priority</FormLabel>
+            <FormInput />
+        </FormContainer>
 
-//takes teh title, id and a callback function for what to do when a certain link has been selected
+        </>
+    )
+}
+const LinkContent = ({link}) => {
+    return (
+        <>
+            <LinkTitle>{link.title}</LinkTitle>
+            <ProgressBar >
+                <ProgressTick/>
+                <ProgressTick/>
+                <ProgressTick/>
+                <ProgressTick/>
+            </ProgressBar>
+        </>
+    )
+}
+//takes the title, id and a callback function for what to do when a certain link has been selected
 const LinkItem =  ({ link, onSelect }) => {
-
-    // TODO: for every goal, map a progress tick, for every completed goal, color an existing (invisible) tick
-    // const ShowButton = tw(Button)`absolute right-0 top-0 m-1 w-9 h-auto `
+    const [creating, setCreating ] = useState(!link)
+    const { linksState, dispatchLinkActions } = useContext(LinkContext)
 
     return (
             <Container>
                 <Content onClick={onSelect}>
-                    <LinkTitle>{link.title}</LinkTitle>
-                    <ProgressBar >
-                        <ProgressTick/>
-                        <ProgressTick/>
-                        <ProgressTick/>
-                        <ProgressTick/>
-                    </ProgressBar>
+                   {creating ? <LinkModication /> : <LinkContent link={link} /> }
                 </Content>
             </Container>
     )
