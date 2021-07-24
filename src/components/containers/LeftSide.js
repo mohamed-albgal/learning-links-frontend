@@ -12,7 +12,7 @@ const PlusContainer = tw.div`py-5 text-center`
 const PlusButton = tw(Icon)`text-gray-800 p-1 rounded-full text-3xl`
 
 //onLinkSelect is a function that takes  the link id as argument so the parent can show some link on the right hand side
-export default ({ linkData, onLinkSelect }) => {
+const LeftSide = ({ linkData, onLinkSelect }) => {
     const [drawerOpen, setDrawerOpen] = useState(true);
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
             tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
@@ -33,3 +33,4 @@ export default ({ linkData, onLinkSelect }) => {
             </Container>
     );
 };
+export default LeftSide

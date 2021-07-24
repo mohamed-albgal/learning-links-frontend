@@ -30,7 +30,7 @@ const dummyLinks = [
 
 ]
 
-export default () => {
+const MainContent =  () => {
     const [selectedNote, setSelectedNote] = useState({});
     const [links, setLinks] = useState([]);
     
@@ -43,15 +43,15 @@ export default () => {
             
         },[dummyLinks]);
 
-        const Container = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
-        
-        const handleSelectedNote = (id) => {
-            setSelectedNote(dummyLinks[id]);
-        }
-        
-        const handleUpdateNote = (body) => {
-            setSelectedNote( prev => ({ ...prev, body}))
-        }
+    const Container = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
+    
+    const handleSelectedNote = (id) => {
+        setSelectedNote(dummyLinks[id]);
+    }
+    
+    const handleUpdateNote = (body) => {
+        setSelectedNote( prev => ({ ...prev, body}))
+    }
         
     return (
         <Container >
@@ -60,3 +60,4 @@ export default () => {
         </Container>
     )
 }
+export default MainContent;
