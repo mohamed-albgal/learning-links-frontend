@@ -30,16 +30,16 @@ const dummyLinks = [
 ]
 export const linkReducer = (state, action) => {
     switch(action.type){
-        case 'displayLink':
-            return {
-                ...state,
-                displayed: action.payload.id
-            }
-        case 'updateLink':
+        case 'mutateOneLink':
             //can't change the state directly, make a copy of it and then change that, 
             //don't confuse locally scoped 'links' with the one stored in the state!
+            let mutation = action.payload.link
             let links = [ ...state.links ]
-            links[state.displayed] = { ...state.links[state.displayed], body: action.payload.body}
+            //find the one with this id
+            let index = links.findIndex(x => x.id == mutation.id)
+            if (index < 0) Error("how can the incoming mutated link not be present in the original list of links (index not found when calling reducer)?")
+            // replace it with the mutated link
+            links[index] = mutation
             return {
                 ...state,
                 links,
@@ -51,6 +51,5 @@ export const linkReducer = (state, action) => {
 }
 
 export const initialLinkState = {
-    displayed: 0,
     links: [...dummyLinks],
 }
