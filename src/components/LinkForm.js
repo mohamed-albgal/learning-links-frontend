@@ -40,7 +40,7 @@ const FormButtons = ({create, cancel}) => {
 const ButtonPair = tw.div`flex items-center mx-auto justify-center`
 const Icon = tw.button`text-gray-800  border border-gray-100 hover:border-yellow-300 shadow-md bg-gray-100 text-4xl`
 const IconContainer = tw.div`py-5 text-center`
-const IconButton = tw(Icon)` p-1 mx-3 rounded-full text-3xl hover:text-4xl hover:shadow-xl text-white`
+const IconButton = tw(Icon)` p-1 mx-3 rounded-full text-3xl shadow-xl text-white`
 const CheckButton = tw(IconButton)`bg-green-600 `
 const CancelButton = tw(IconButton)`bg-gray-500 text-white`
 

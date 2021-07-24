@@ -19,28 +19,24 @@ const LeftSide =  () => {
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
         tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
     ]);
-    useEffect(() => {
-        open = drawerOpen
-    },[drawerOpen])
+    useEffect(() => open = drawerOpen,[drawerOpen])
+    useEffect(() => index = linksState.links.findIndex(x => x.id === selected.id),[selected, linksState.links])
 
-    useEffect(() => {
-        index = linksState.links.findIndex(x => x.id === selected.id) 
-    },[selected, linksState.links])
-
-    const onLinkSelect = (id) => {
-        setSelected(linksState.links[id]);
-    }
-
-    const LinksDisplay = () => {
-        const LinksList = () => linksState.links.map(link => <LinkItem key={link.id} link={link} onSelect={() => setSelected(linksState.links[link.id])} />)
+    const ConditionalContent = () => {
         return (
             <>
-                <LinksList/>
-                <PlusContainer >
-                    <PlusButton onClick={() => setCreating(true)}>
-                        <FaPlus/>
-                    </PlusButton>
-                </PlusContainer>
+            { creating 
+                ?  <LinkForm createAction={() => alert("created")} cancelAction={()=>setCreating(false)} />
+                : 
+                <>
+                    {linksState.links.map(link => <LinkItem key={link.id} link={link} onSelect={() => setSelected(linksState.links[link.id])} />)}
+                    <PlusContainer >
+                        <PlusButton onClick={() => setCreating(true)}>
+                            <FaPlus/>
+                        </PlusButton>
+                    </PlusContainer>
+                </>
+            }
             </>
         )
     }
@@ -53,9 +49,7 @@ const LeftSide =  () => {
                         { drawerOpen ? <BsFillCaretLeftFill />:< BsFillCaretRightFill />}
                     </ArrowButton>
                 </ArrowContainer>
-                { drawerOpen && ( creating ?  
-                <LinkForm createAction={() => alert("created")} cancelAction={()=>setCreating(false)} />
-                : <LinksDisplay />)}
+                {drawerOpen && <ConditionalContent />}
             </Container>
             <RightSide />
         </SelectedLinkContext.Provider>

@@ -1,6 +1,4 @@
-import { useContext } from 'react/cjs/react.production.min';
 import tw, {styled} from'twin.macro';
-import { LinkContext } from '../Contexts';
 const Container = styled.div( () => [tw` relative border border-gray-900 w-full bg-gradient-to-r from-purple-900 to-purple-500  p-4 my-3  rounded-md`,]);
 const Content = styled.button( () => [tw`h-10 p-2 w-full font-thin text-white`] )
 const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
