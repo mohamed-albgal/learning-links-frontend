@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import tw from 'twin.macro';
 import Button from './Button'
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import {  GiQuillInk } from "react-icons/gi"
 

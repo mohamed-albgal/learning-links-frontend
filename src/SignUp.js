@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../Contexts';
+import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import Spinner from './Spinner';
 import VerificationForm from './Verification'

@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import tw from 'twin.macro'
+import { LinkContext } from '../Contexts'
 import Button from './Button'
+import { SelectedLinkContext } from './containers/LeftSide'
 
 const TextAreaContainer = tw.div`block mx-auto h-screen`
 const TextArea = tw.textarea` block mx-auto p-10 w-11/12 h-96 max-h-screen font-mono overflow-scroll whitespace-pre-wrap`
-const NoteTitle= tw.div`text-xl font-semibold text-center`
 const CommitButton = tw(Button)`h-10 w-32 font-thin mt-6`
 
-const TextBoxBody = ( {body, title, updateBody} ) => {
-    const [textContent, setTextContent] = useState(body);
+const TextBoxBody = ( {modifyLinkBody}) => {
+    const {selected } = useContext(SelectedLinkContext)
+    const [ body, setBody ] = useState("")
+    useEffect(()=>{
+        setBody(selected.body)
 
+    },[selected])
     return (
         <>
-            <NoteTitle >{title}</NoteTitle>
             <TextAreaContainer>            
-                <TextArea value={textContent} onChange={e => setTextContent(e.target.value)}     />
-                <CommitButton onClick={ e => updateBody(textContent)} >Save Changes</CommitButton>
+                <TextArea value={body} onChange={e => setBody(e.target.value)}     />
+                <CommitButton onClick={() => modifyLinkBody(body)} >Save Changes</CommitButton>
             </TextAreaContainer>
         </>
     )

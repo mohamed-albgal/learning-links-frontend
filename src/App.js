@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
-import { AuthContext }  from './AuthContext';
+import { AuthContext }  from './Contexts';
 import NavBar from './components/NavBar'
 import MainContent from './components/containers/MainContent'
 import { Switch, Route } from 'react-router-dom';
