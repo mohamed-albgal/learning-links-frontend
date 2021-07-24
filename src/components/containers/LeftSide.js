@@ -13,7 +13,6 @@ let index =-1
 const LeftSide =  () => {
     const { linksState } = useContext(LinkContext)
     const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
-    const [ creating, setCreating ] = useState(false);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
         tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 overflow-scroll flex-none shadow-2xl `,
@@ -31,10 +30,10 @@ const LeftSide =  () => {
                 </ArrowContainer>
                 {drawerOpen && 
                 <> <LinkListContainer>
-                        {linksState.links.map(link => <LinkItem key={link.id} link={link} onSelect={() => setSelected(linksState.links[link.id])} />)}
+                        {linksState.links.map(link => <LinkItem key={link.id} link={link}/>)}
                     </LinkListContainer>
                     <PlusContainer >
-                        <PlusButton onClick={() => setCreating(true)}>
+                        <PlusButton onClick={() => alert("new form?")}>
                             <FaPlus/>
                         </PlusButton>
                     </PlusContainer>
