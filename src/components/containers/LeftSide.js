@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import tw, { styled } from 'twin.macro';
 import { FaPlus } from 'react-icons/fa'        
-import { BsFillCaretLeftFill } from 'react-icons/bs'
-import { BsFillCaretRightFill } from 'react-icons/bs'
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs'
+import { } from 'react-icons/bs'
 import { LinkContext, SelectedLinkContext } from '../../Contexts';
 import LinkItem from '../LinkItem';
 import RightSide from './RightSide';
+import LinkForm from '../LinkForm';
 
 let open = true
 let index =-1 
@@ -13,6 +14,7 @@ let index =-1
 const LeftSide =  () => {
     const { linksState } = useContext(LinkContext)
     const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
+    const [ creating, setCreating ] = useState(false);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
         tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 flex-none shadow-2xl `,
@@ -29,18 +31,31 @@ const LeftSide =  () => {
         setSelected(linksState.links[id]);
     }
 
+    const LinksDisplay = () => {
+        const LinksList = () => linksState.links.map(link => <LinkItem key={link.id} link={link} onSelect={() => setSelected(linksState.links[link.id])} />)
+        return (
+            <>
+                <LinksList/>
+                <PlusContainer >
+                    <PlusButton onClick={() => setCreating(true)}>
+                        <FaPlus/>
+                    </PlusButton>
+                </PlusContainer>
+            </>
+        )
+    }
+
     return (
         <SelectedLinkContext.Provider value={{selected, setSelected}}>
             <Container>
                 <ArrowContainer>
                     <ArrowButton onClick={() => setDrawerOpen(!drawerOpen)}>
-                        { !drawerOpen ? < BsFillCaretRightFill /> : <BsFillCaretLeftFill />}
+                        { drawerOpen ? <BsFillCaretLeftFill />:< BsFillCaretRightFill />}
                     </ArrowButton>
                 </ArrowContainer>
-                { drawerOpen &&  linksState.links.map(({id,title}) => <LinkItem key={id} itemKey={id} title={title} onSelect={onLinkSelect}/>)}
-                <PlusContainer >
-                    <PlusButton onClick={() => alert("click")} ><FaPlus/></PlusButton>
-                </PlusContainer>
+                { drawerOpen && ( creating ?  
+                <LinkForm createAction={() => alert("created")} cancelAction={()=>setCreating(false)} />
+                : <LinksDisplay />)}
             </Container>
             <RightSide />
         </SelectedLinkContext.Provider>
@@ -49,6 +64,7 @@ const LeftSide =  () => {
     };
 export default LeftSide;
     
+
 const Icon = tw.button`text-gray-800  border border-gray-100 hover:border-yellow-300 shadow-md bg-gray-100 text-4xl`
 const ArrowButton = tw(Icon)`m-1 mr-6 rounded-md `
 const ArrowContainer = tw.div`text-right w-auto -mr-6 -mt-8 mb-1`
