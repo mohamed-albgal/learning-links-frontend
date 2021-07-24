@@ -3,6 +3,23 @@ import tw, {styled} from'twin.macro';
 import { FaEdit } from 'react-icons/fa' 
 import { LinkContext, SelectedLinkContext } from '../Contexts';
 
+
+//takes the title, id and a callback function for what to do when a certain link has been selected
+const LinkItem =  ({ link }) => {
+    const [editing, setEditing ] = useState(!link)
+    //will need this to modify the list of links with the newly created one
+    const { linksState, dispatchLinkActions } = useContext(LinkContext)
+    const { selected, setSelected } = useContext(SelectedLinkContext)
+
+    return (
+            <Container onClick={() => setSelected(link)} type="button">
+                <Content >
+                   {editing ? <LinkModication /> : <LinkContent onClick={() => setEditing(!editing)} link={link} /> }
+                </Content>
+            </Container>
+    )
+};
+export default LinkItem;
 const Container = styled.div( () => [tw` relative border border-gray-900 w-full bg-gradient-to-r from-purple-900 to-purple-500  p-4 my-3  rounded-md`,]);
 const Content = styled.button( () => [tw`min-h-full p-2 w-full font-thin text-white`] )
 const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
@@ -46,19 +63,3 @@ const LinkContent = ({link, onClick}) => {
         </>
     )
 }
-//takes the title, id and a callback function for what to do when a certain link has been selected
-const LinkItem =  ({ link }) => {
-    const [creating, setCreating ] = useState(!link)
-    //will need this to modify the list of links with the newly created one
-    const { linksState, dispatchLinkActions } = useContext(LinkContext)
-    const { selected, setSelected } = useContext(SelectedLinkContext)
-
-    return (
-            <Container onClick={() => setSelected(link)} type="button">
-                <Content >
-                   {creating ? <LinkModication /> : <LinkContent onClick={() => setCreating(!creating)} link={link} /> }
-                </Content>
-            </Container>
-    )
-};
-export default LinkItem;

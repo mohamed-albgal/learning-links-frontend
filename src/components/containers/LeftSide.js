@@ -12,6 +12,19 @@ let index =-1
 
 const LeftSide =  () => {
     const { linksState } = useContext(LinkContext)
+    /**
+     *todo:
+        left off here:
+            the creating state is for creating a new link,
+            click the plus button changes this state to true (creating) 
+            then this will render a dummy LinkItem with no 'link' prop causing its editing state to be true,
+            then once teh new link is filled out, some 'add' button will cause the newly created link to be inserted into teh linksState
+            links bundle, causing everything to rerender (?) or at least just this component so that the map from links to linkItems will include the newly created link
+            
+     * 
+     * 
+     */
+    const [creating, setCreating] = useState(false);
     const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
     const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
@@ -32,6 +45,7 @@ const LeftSide =  () => {
                 <> <LinkListContainer>
                         {linksState.links.map(link => <LinkItem key={link.id} link={link}/>)}
                     </LinkListContainer>
+
                     <PlusContainer >
                         <PlusButton onClick={() => alert("new form?")}>
                             <FaPlus/>
