@@ -9,7 +9,9 @@ import RightSide from './RightSide';
 
 let open = true
 let index =-1 
-
+const Container = styled.div( ({open}) =>[ !open ? tw`w-0`: tw`w-1/3`, 
+    tw`transition-width duration-700 ease-in-out p-12 bg-gray-200 border border-gray-200 overflow-scroll flex-none shadow-2xl `,
+]);
 const LeftSide =  () => {
     const { linksState } = useContext(LinkContext)
     /**
@@ -27,15 +29,13 @@ const LeftSide =  () => {
     const [creating, setCreating] = useState(false);
     const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
-    const Container = styled.div( () => [ !drawerOpen ? tw`w-0`: tw`w-1/3`, 
-        tw`transition-width duration-500 ease-linear p-12 bg-gray-200 border border-gray-200 overflow-scroll flex-none shadow-2xl `,
-    ]);
+
     useEffect(() => open = drawerOpen,[drawerOpen])
     useEffect(() => index = linksState.links.findIndex(x => x.id === selected.id),[selected, linksState.links])
 
     return (
         <SelectedLinkContext.Provider value={{selected, setSelected}}>
-            <Container>
+            <Container open={drawerOpen }>
                 <ArrowContainer>
                     <ArrowButton onClick={() => setDrawerOpen(!drawerOpen)}>
                         { drawerOpen ? <BsFillCaretLeftFill />:< BsFillCaretRightFill />}
@@ -60,7 +60,8 @@ const LeftSide =  () => {
     };
 export default LeftSide;
     
-const LinkListContainer = tw.div`flex flex-col justify-between `
+
+const LinkListContainer = tw.div` flex flex-col justify-between `
 const Icon = tw.button`text-gray-800  border border-gray-100 hover:border-yellow-300 shadow-md bg-gray-100 text-4xl`
 const ArrowButton = tw(Icon)`m-1 mr-6 rounded-md `
 const ArrowContainer = tw.div`text-right w-auto -mr-6 -mt-8 mb-1`

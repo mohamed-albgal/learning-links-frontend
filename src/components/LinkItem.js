@@ -1,42 +1,40 @@
 import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
 import { LinkContext, SelectedLinkContext } from '../Contexts';
-import { BsCardText } from 'react-icons/bs';
+import { BsPencilSquare }  from 'react-icons/bs';
 
 
 
-const Container = tw.div`relative border border-gray-900 w-full bg-gradient-to-r from-purple-900 to-purple-500  p-4 my-3  rounded-md`
+const Container = tw.div`relative    w-full bg-gradient-to-r from-purple-900 to-purple-500  p-4 my-3  rounded-md`
 const Content = styled.button( () => [tw`min-h-full p-2 w-full font-thin text-white`] )
 const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
-const FormContainer = tw.div`w-full p-1  overflow-scroll`
-const FormInput = tw.input` bg-gray-50  mx-auto`
-const FormLabel = tw.label`  text-left     text-white font-thin text-xs`
+const FormContainer = tw.div`w-full m-0 overflow-scroll`
+const FormInput = tw.input` bg-gray-50 tracking-wider text-sm text-center pt-2 w-full mx-2 border-b place-content-stretch border-yellow-100 rounded-sm bg-transparent`
+const FormLabel = tw.div`text-xs my-5   `
 const ProgressTick = tw.div`mr-3 h-1 w-1/6 bg-yellow-400`
-const LinkTitle = tw.p`font-semibold`
-const EditIconContainer = tw.div`absolute top-0 hover:text-2xl left-0 mx-2 my-1 rounded-md  text-left `
-const EditIcon = tw.button`text-2xl text-purple-200 hover:text-yellow-400`
-const Selected = tw(Container)`relative left-6  border-r-8 border-yellow-300 `
-const LinkModication = () => {
-    return (
-        <>
+const LinkTitle = tw.p`font-semibold my-3`
+const EditIconContainer = tw.div`absolute top-0  left-0 mx-2 my-2 rounded-md  text-left `
+const EditIcon = tw.button`text-xl text-gray-400 hover:text-yellow-300`
+const Selected = tw(Container)`  left-10  border-r-8 border-yellow-300 `
+
+const LinkModication = () => (
+    <>
         <FormContainer>
-            <FormLabel >Title</FormLabel>
-            <FormInput />
-            <FormLabel >Goals</FormLabel>
-            <FormInput />
-            <FormLabel >Priority</FormLabel>
-            <FormInput />
+            <FormLabel > <FormInput placeholder="Title" /></FormLabel>
+            <FormLabel ><FormInput placeholder="Goals" /></FormLabel>
+            <FormLabel ><FormInput placeholder="Priority" /></FormLabel>
+            
         </FormContainer>
 
-        </>
-    )
-}
+    </>
+);
+
 const LinkContent = ({link, onClick}) => {
     return (
         <>
             <EditIconContainer>
                 <EditIcon onClick={onClick}>
-                    <BsCardText/>
+                    <BsPencilSquare/>
                 </EditIcon>
             </EditIconContainer>
             <LinkTitle>{link.title}</LinkTitle>
@@ -49,7 +47,8 @@ const LinkContent = ({link, onClick}) => {
         </>
     )
 }
-//takes the title, id and a callback function for what to do when a certain link has been selected
+
+// receives one link and its data
 const LinkItem =  ({ link }) => {
     const [creating, setCreating ] = useState(!link)
     //will need this to modify the list of links with the newly created one
@@ -60,7 +59,7 @@ const LinkItem =  ({ link }) => {
 
 
     return (
-            <ItemContainer  onClick={() => setSelected(link)} type="button">
+            <ItemContainer long={creating}  onClick={() => setSelected(link)} type="button">
                 <Content >
                    {creating ? <LinkModication /> : <LinkContent onClick={() => setCreating(!creating)} link={link} /> }
                 </Content>
