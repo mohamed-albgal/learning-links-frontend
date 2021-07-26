@@ -5,7 +5,7 @@ import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import {  GiQuillInk } from "react-icons/gi"
 
-const Container = tw.div`w-full fixed h-20 top-0 px-6 pt-4 bg-gray-800 z-40`
+const Container = tw.div`w-full fixed h-20 top-0 px-6 pt-4  bg-gradient-to-r from-gray-900 to-purple-800  z-40`
 const Content = tw.div`flex flex-row-reverse p-1`
 const NavButton = tw(Button)`text-lg h-10 w-24`
 const ButtonContent = tw.p`p-1`
