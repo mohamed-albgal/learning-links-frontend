@@ -1,7 +1,7 @@
 import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
 import { LinkContext, SelectedLinkContext } from '../Contexts';
-import { BsPencilSquare }  from 'react-icons/bs';
+import { BsPencilSquare, BsCheck, BsX }  from 'react-icons/bs';
 
 
 
@@ -16,15 +16,22 @@ const LinkTitle = tw.p`font-semibold my-3`
 const EditIconContainer = tw.div`absolute top-0  left-0 mx-2 my-2 rounded-md  text-left `
 const EditIcon = tw.button`text-xl text-gray-400 hover:text-yellow-300`
 const Selected = tw(Container)`  left-10  border-r-8 border-yellow-300 `
+const FormButtonPair = tw.div``
+const IconButton = tw.button`mx-7 my-3 text-3xl bg-gray-900 rounded-full hover:border-gray-400 border border-gray-900`
+const CheckButton = tw(IconButton)`text-purple-300 `
+const XButton = tw(IconButton)`text-red-400 bg-gray-900 `
 
-const LinkModication = () => (
+const LinkModication = ({closeForm,openForm}) => (
     <>
         <FormContainer>
             <FormLabel > <FormInput placeholder="Title" /></FormLabel>
             <FormLabel ><FormInput placeholder="Goals" /></FormLabel>
             <FormLabel ><FormInput placeholder="Priority" /></FormLabel>
-            
         </FormContainer>
+        <FormButtonPair>
+            <CheckButton onClick={openForm}><BsCheck/></CheckButton>
+            <XButton onClick={closeForm} ><BsX/></XButton>
+        </FormButtonPair>
 
     </>
 );
@@ -61,7 +68,7 @@ const LinkItem =  ({ link }) => {
     return (
             <ItemContainer long={creating}  onClick={() => setSelected(link)} type="button">
                 <Content >
-                   {creating ? <LinkModication /> : <LinkContent onClick={() => setCreating(!creating)} link={link} /> }
+                   {creating ? <LinkModication openForm={()=>alert("cool")} closeForm={()=>setCreating(false)} /> : <LinkContent onClick={() => setCreating(!creating)} link={link} /> }
                 </Content>
             </ItemContainer>
     )
