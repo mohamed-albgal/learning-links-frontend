@@ -26,7 +26,7 @@ data i need:
     {
       title: "AWS Certified Associate Solutions Architect",
       topic: "tech",
-      source: "https://www.acloudguru.com/",
+      source: "https://www.acloudguruthere.com/",
       linkNotes: "I will become AWS certified because I am driven\n learning it is beneficial",
       goals: 10,
       completedGoals: 4,
@@ -37,7 +37,7 @@ data i need:
       topic: "tech",
       title: "Become a better developer",
       linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
-      source: "https://www.codecademy.com/",
+      source: "https://www.1codecademy.com/",
       goals: 20,
       completedGoals: 12, 
       questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
@@ -72,21 +72,32 @@ data i need:
   },   
 ]
 export const linkReducer = (state, action) => {
+    let { links } = state;
+    let { link } = action.payload
     switch(action.type){
         case 'mutateOneLink':
             //can't change the state directly, make a copy of it and then change that, 
             //don't confuse locally scoped 'links' with the one stored in the state!
             let mutation = action.payload.link
-            let links = [ ...state.links ]
+            // let links = [ ...state.links ]
             //find the one with this id
-            let index = links.findIndex(x => x.id === mutation.id)
+            let index = links.findIndex(x => x.source === mutation.source)
             if (index < 0) Error("how can the incoming mutated link not be present in the original list of links (index not found when calling reducer)?")
             // replace it with the mutated link
             links[index] = mutation
             return {
-                ...state,
                 links,
             }
+        case 'newLinkItem':
+            links.push(link)
+            links = [ ...links]
+            return { links }
+        case 'deleteItem':
+            //all of this untested
+            let i = links.findIndex(e => e.source === link.source)
+            links = [...(links.splice(i,1))];
+            return { links }
+
 
         default:
             return state;

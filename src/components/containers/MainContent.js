@@ -9,9 +9,11 @@ const MainContent =  () => {
     const [ linksState, dispatchLinkActions ] = useReducer(linkReducer, initialLinkState);
     const Container = tw.div`mt-10 fixed top-10 flex w-full h-screen items-stretch`
 
+    //not exactly sure why passing in the value for the provider like this is advisable, seen on k c dodd article
+    const providerValue ={linksState, dispatchLinkActions} 
     return (
         <Container>
-            <LinkContext.Provider value={{linksState, dispatchLinkActions}}>
+            <LinkContext.Provider value={providerValue}>
                 <LeftSide  />
             </LinkContext.Provider>
         </Container>

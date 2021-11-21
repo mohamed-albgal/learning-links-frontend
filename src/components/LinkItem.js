@@ -15,28 +15,39 @@ const ProgressTick = tw.div`mr-3 h-1 w-1/6 bg-yellow-400`
 const LinkTitle = tw.p`font-semibold my-3`
 const EditIconContainer = tw.div`absolute top-0  left-0 mx-2 my-2 rounded-md  text-left `
 const EditIcon = tw.button`text-xl text-gray-400 hover:text-yellow-300`
-const Selected = tw(Container)`  left-10  border-r-8 border-yellow-300 `
+const Selected = tw(Container)`  left-10 from-black to-purple-400 border-r-8 border-yellow-300  `
 const FormButtonPair = tw.div``
 const IconButton = tw.button`inline mx-7 my-3 text-3xl bg-gray-900 rounded-full hover:border-gray-400 border border-gray-900`
 const CheckButton = tw(IconButton)`text-purple-300 `
 const XButton = tw(IconButton)`text-red-400 bg-gray-900 `
 
-const LinkForm = ({closeForm,openForm}) => (
-    <>
+const LinkForm = ({closeForm,openForm,link}) => {
+    const [title, setTitle] = useState(link.title)
+    const [goals, setGoals] = useState(link.goals)
+    const [priority, setPriority] = useState(link.priority)
+    return(<>
         <FormContainer>
-            <FormLabel > <FormInput placeholder="Title" /></FormLabel>
-            <FormLabel ><FormInput placeholder="Goals" /></FormLabel>
-            <FormLabel ><FormInput placeholder="Priority" /></FormLabel>
+            <FormLabel > <FormInput value={title} placeholder={"title"} onChange={e => setTitle(e.target.value)} /></FormLabel>
+            <FormLabel ><FormInput value={goals} placeholder={"goals"} onChange={e => setGoals(e.target.value)} /></FormLabel>
+            <FormLabel ><FormInput value={priority} placeholder={"priority"} onChange={e => setPriority(e.target.value)}  /></FormLabel>
         </FormContainer>
         <FormButtonPair>
-            <CheckButton onClick={openForm}><BsCheck/></CheckButton>
+            <CheckButton onClick={e => openForm({title,goals,priority})}><BsCheck/></CheckButton>
             <XButton onClick={closeForm} ><BsX/></XButton>
         </FormButtonPair>
 
-    </>
-);
+        </>
+    )};
 
-const LinkContent = ({link, onClick}) => {
+const LinkContent = ({link, onClick,selected}) => {
+    const showTicks = () => {
+        let ticks = [];
+        let i = 0
+        while(i++ < link.goals && i < 8){
+            ticks.push(<ProgressTick />)
+        }
+        return ticks
+    };
     return (
         <>
             <EditIconContainer>
@@ -46,10 +57,7 @@ const LinkContent = ({link, onClick}) => {
             </EditIconContainer>
             <LinkTitle>{link.title}</LinkTitle>
             <ProgressBar >
-                <ProgressTick/>
-                <ProgressTick/>
-                <ProgressTick/>
-                <ProgressTick/>
+                {showTicks()}
             </ProgressBar>
         </>
     )
@@ -59,19 +67,29 @@ const LinkContent = ({link, onClick}) => {
 const LinkItem =  ({ link }) => {
     const [creating, setCreating ] = useState(!link)
     //will need this to modify the list of links with the newly created one
-    const { linksState, dispatchLinkActions } = useContext(LinkContext)
+    const { dispatchLinkActions } = useContext(LinkContext)
     const { selected, setSelected } = useContext(SelectedLinkContext)
     
-    const ItemContainer = selected.id === link.id ? Selected : Container
+    const ItemContainer = selected.source === link.source ? Selected : Container
+    const modifyLink = (data) => {
+        Object.assign(link,data);
+        debugger
+        let a = link;
+        dispatchLinkActions({type:'mutateOneLink', payload:{link}})
+    }
 
 
+    const editButtonClick = (e) => {
+        e.stopPropagation();
+        setCreating(!creating)
+    }
     return (
-        <ItemContainer long={creating}  onClick={() => setSelected(link)} type="button">
+        <ItemContainer  onClick={() => setSelected(link)} type="button">
             <Content >
                 {creating ? 
-                <LinkForm openForm={()=>alert("cool")} closeForm={()=>setCreating(false)} /> 
+                <LinkForm link={link} openForm={modifyLink} closeForm={()=>setCreating(false)} /> 
                 : 
-                <LinkContent onClick={() => setCreating(!creating)} link={link} /> }
+                <LinkContent onClick={editButtonClick} link={link} /> }
             </Content>
         </ItemContainer>
     )

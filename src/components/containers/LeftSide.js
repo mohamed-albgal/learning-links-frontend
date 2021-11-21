@@ -13,7 +13,7 @@ const Container = styled.div( ({open}) =>[ !open ? tw`w-0`: tw`w-1/3`,
     tw`transition-width duration-700 ease-in-out p-12 bg-gray-200 border border-gray-200 overflow-scroll flex-none shadow-2xl `,
 ]);
 const LeftSide =  () => {
-    const { linksState } = useContext(LinkContext)
+    const { linksState, dispatchLinkActions } = useContext(LinkContext)
     /**
      *todo:
         left off here:
@@ -26,15 +26,27 @@ const LeftSide =  () => {
      * 
      * 
      */
-    const [creating, setCreating] = useState(false);
     const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
 
     useEffect(() => open = drawerOpen,[drawerOpen])
-    useEffect(() => index = linksState.links.findIndex(x => x.id === selected.id),[selected, linksState.links])
+    useEffect(() => index = linksState.links.findIndex(x => x.source === selected.source),[selected, linksState.links])
+    const createNew = () => {
+        let link =   {
+            topic: "tech",
+            title: "Still working for some reason!",
+            linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
+            source: "https://www.3codecademy.com/",
+            goals: 20,
+            completedGoals: 12, 
+            questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
+        }
+        dispatchLinkActions({type:"newLinkItem", payload:{ link }})
+    }
 
+    const providerValue = {selected, setSelected}
     return (
-        <SelectedLinkContext.Provider value={{selected, setSelected}}>
+        <SelectedLinkContext.Provider value={providerValue}>
             <Container open={drawerOpen }>
                 <ArrowContainer>
                     <ArrowButton onClick={() => setDrawerOpen(!drawerOpen)}>
@@ -43,11 +55,11 @@ const LeftSide =  () => {
                 </ArrowContainer>
                 {drawerOpen && 
                 <> <LinkListContainer>
-                        {linksState.links.map(link => <LinkItem key={link.id} link={link}/>)}
+                        {linksState.links.sort((a,b) => a.priotity > b.priotity).map(link => <LinkItem key={link.id} link={link}/>)}
                     </LinkListContainer>
 
                     <PlusContainer >
-                        <PlusButton onClick={() => alert("new form?")}>
+                        <PlusButton onClick={createNew}>
                             <FaPlus/>
                         </PlusButton>
                     </PlusContainer>

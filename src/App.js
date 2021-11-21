@@ -23,10 +23,11 @@ const App = () => {
       console.log("error checking for the user's session");
     }
   }
+  const providerValue = { authed, setAuthed };
 
   return (
     <>
-      <AuthContext.Provider value={{ authed, setAuthed }} > 
+      <AuthContext.Provider value={providerValue} > 
         <NavBar />
         <Switch>
           <Route exact path='/'>
