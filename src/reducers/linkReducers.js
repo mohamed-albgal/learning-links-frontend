@@ -1,81 +1,75 @@
 
-const dummyLinks = [
-      {
-      id: 0,
-      title: " Learning Linux",
-      body: "Linux is a nice OS\n learning it is beneficial",
+/*
+
+data i need:    
+                questions  = []
+                where are images stored?
+                id = string
+                title = string
+                images = []
+                url = string 
+                goals = []
+                completedGoalsSoFar
+
+
+    */
+    const dummyLinks = [
+    {
+      title: "Learning Linux",
+      topic: "tech",
+      source: "https://linuxjourney.com/",
+      linkNotes: "Linux is a nice OS\n learning it is beneficial",
       goals: 6,
       completedGoals: 1, 
-      source: "",
-  },   
-
-  {
-      id: 1,
+      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
+    },   
+    {
       title: "AWS Certified Associate Solutions Architect",
-      body: "I will become AWS certified because I am driven\n learning it is beneficial",
+      topic: "tech",
+      source: "https://www.acloudguru.com/",
+      linkNotes: "I will become AWS certified because I am driven\n learning it is beneficial",
       goals: 10,
-      completedGoals: 4, 
-      source: "",
-  },   
+      completedGoals: 4,
+      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}} 
+    },   
 
   {
-      id: 2,
+      topic: "tech",
       title: "Become a better developer",
-      body: " I know I can be better,\n I just have to remain focused and stay to the course!",
+      linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
+      source: "https://www.codecademy.com/",
       goals: 20,
       completedGoals: 12, 
-      source: "",
+      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
   },   {
-      id: 3,
-      title: " Learning Linux",
-      body: "Linux is a nice OS\n learning it is beneficial",
+      topic: "tech",
+      title: "Sql mastery",
+      linkNotes: "Learning sql means a lot of practice and a lot of tables being made!",
       goals: 6,
       completedGoals: 1, 
-      source: "",
+      source: "https://www.masterywithsql.com/",
+      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
   },   
 
   {
-      id: 4,
-      title: "AWS Certified Associate Solutions Architect",
-      body: "I will become AWS certified because I am driven\n learning it is beneficial",
+      topic: "tech",
+      title: "Ruby guru",
+      linkNotes: "Ruby is just another programming language that I will learn and master!",
       goals: 10,
       completedGoals: 4, 
-      source: "",
+      source: "https://www.ruby-lang.org/en/documentation/quickstart/",
+      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
   },   
 
   {
-      id: 5,
-      title: "Become a better developer",
-      body: " I know I can be better,\n I just have to remain focused and stay to the course!",
+      topic: "tech",
+      title: "Learn NoSql",
+      linkNotes: " NoSql is important to learn just like no sql is!",
       goals: 20,
       completedGoals: 12, 
-      source: "",
-  },   {
-      id: 6,
-      title: " Learning Linux",
-      body: "Linux is a nice OS\n learning it is beneficial",
-      goals: 6,
-      completedGoals: 1, 
-      source: "",
+      source: "https://www.edx.org/learn/nosql",
+      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
   },   
-
-  {
-      id: 7,
-      title: "AWS Certified Associate Solutions Architect",
-      body: "I will become AWS certified because I am driven\n learning it is beneficial",
-      goals: 10,
-      completedGoals: 4, 
-      source: "",
-  },   
-
-  {
-      id: 8,
-      title: "Become a better developer",
-      body: " I know I can be better,\n I just have to remain focused and stay to the course!",
-      goals: 20,
-      completedGoals: 12, 
-      source: "",
-  },
 ]
 export const linkReducer = (state, action) => {
     switch(action.type){

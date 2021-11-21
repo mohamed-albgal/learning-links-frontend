@@ -10,7 +10,7 @@ const RightSide =  () => {
     const { dispatchLinkActions } = useContext(LinkContext)
     const { selected } = useContext(SelectedLinkContext);
     const updateSelectedLink = (body) => {
-        let link =  { ...selected, body}
+        let link =  { ...selected, linkNotes: body}
         dispatchLinkActions({type:"mutateOneLink", payload:{ link }})
     }
     return (

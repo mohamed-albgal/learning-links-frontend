@@ -21,13 +21,10 @@ const SignUp = () => {
                 throw new Error("The passwords don't match");
             }
             await Auth.signUp({ username: email, password: password});
-            setLoading(false);
             setError("");
             setConfirming(true);
-        }catch(e) {
-            setLoading(false);
-            setError(e.message);
-        }
+        }catch(e) { setError(e.message) }
+        finally { setLoading(false) }
     }
 
     return (
