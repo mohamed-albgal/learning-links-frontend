@@ -1,7 +1,7 @@
 import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
 import { LinkContext, SelectedLinkContext } from '../Contexts';
-import { BsPencilSquare, BsCheck, BsX }  from 'react-icons/bs';
+import { BsPencilSquare, BsCheck, BsX, BsTrash }  from 'react-icons/bs';
 
 
 
@@ -20,8 +20,9 @@ const FormButtonPair = tw.div``
 const IconButton = tw.button`inline mx-7 my-3 text-3xl bg-gray-900 rounded-full hover:border-gray-400 border border-gray-900`
 const CheckButton = tw(IconButton)`text-purple-300 `
 const XButton = tw(IconButton)`text-red-400 bg-gray-900 `
+const TrashContainer = tw.div`text-xl text-gray-100 h-36 w-full`
 
-const LinkForm = ({closeForm,openForm,link}) => {
+const LinkForm = ({closeForm,openForm,link, deleteAction}) => {
     const [title, setTitle] = useState(link.title)
     const [goals, setGoals] = useState(link.goals)
     const [priority, setPriority] = useState(link.priority)
@@ -36,17 +37,20 @@ const LinkForm = ({closeForm,openForm,link}) => {
             <XButton onClick={closeForm} ><BsX/></XButton>
         </FormButtonPair>
 
+        <TrashCan deleteAction={deleteAction} />
         </>
     )};
 
+    const TrashCan = (deleteAction) => {
+        return (
+            <>
+            <EditIcon onClick={deleteAction}><BsTrash color='black' /></EditIcon>
+            </>
+        )
+    }
 const LinkContent = ({link, onClick,selected}) => {
     const showTicks = () => {
-        let ticks = [];
-        let i = 0
-        while(i++ < link.goals && i < 8){
-            ticks.push(<ProgressTick />)
-        }
-        return ticks
+        return [...Array(link.goals).keys()].map(_ => <ProgressTick />)
     };
     return (
         <>
@@ -73,12 +77,15 @@ const LinkItem =  ({ link }) => {
     const ItemContainer = selected.source === link.source ? Selected : Container
     const modifyLink = (data) => {
         Object.assign(link,data);
-        debugger
         let a = link;
         dispatchLinkActions({type:'mutateOneLink', payload:{link}})
     }
 
 
+    const deleteButton = (e) => {
+        e.stopPropagation();
+        alert('deleted')
+    }
     const editButtonClick = (e) => {
         e.stopPropagation();
         setCreating(!creating)
@@ -87,7 +94,7 @@ const LinkItem =  ({ link }) => {
         <ItemContainer  onClick={() => setSelected(link)} type="button">
             <Content >
                 {creating ? 
-                <LinkForm link={link} openForm={modifyLink} closeForm={()=>setCreating(false)} /> 
+                <LinkForm deleteAction={deleteButton} link={link} openForm={modifyLink} closeForm={()=>setCreating(false)} /> 
                 : 
                 <LinkContent onClick={editButtonClick} link={link} /> }
             </Content>
