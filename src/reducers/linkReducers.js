@@ -72,6 +72,7 @@ data i need:
   },   
 ]
 export const linkReducer = (state, action) => {
+    debugger
     let { links } = state;
     let { link } = action.payload
     switch(action.type){

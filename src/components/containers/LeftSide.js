@@ -26,11 +26,11 @@ const LeftSide =  () => {
      * 
      * 
      */
-    const [ selected, setSelected] = useState(linksState.links[index] || linksState.links[0]);
+    const [ selected, setSelected] = useState(linksState?.links[index] || linksState?.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
 
     useEffect(() => open = drawerOpen,[drawerOpen])
-    useEffect(() => index = linksState.links.findIndex(x => x.source === selected.source),[selected, linksState.links])
+    useEffect(() => index = linksState?.links.findIndex(x => x.source === selected.source),[selected, linksState?.links])
     const createNew = () => {
         let link =   {
             topic: "tech",
@@ -55,7 +55,7 @@ const LeftSide =  () => {
                 </ArrowContainer>
                 {drawerOpen && 
                 <> <LinkListContainer>
-                        {linksState.links.sort((a,b) => a.priotity > b.priotity).map(link => <LinkItem key={link.id} link={link}/>)}
+                        {linksState?.links.sort((a,b) => a.priotity > b.priotity).map(link => <LinkItem key={link.id} link={link}/>)}
                     </LinkListContainer>
 
                     <PlusContainer >

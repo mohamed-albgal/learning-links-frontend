@@ -12,7 +12,7 @@ const TextBoxBody = ({ modifyLinkBody }) => {
     const [ body, setBody ] = useState("");
     //i think this causes the effect of changing the message's body whenever the selected link changes
     useEffect(()=>{
-        setBody(selected.linkNotes)
+        setBody(selected?.linkNotes)
     },[selected])
     return (
         <>

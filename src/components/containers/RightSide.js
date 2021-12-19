@@ -15,7 +15,7 @@ const RightSide =  () => {
     }
     return (
         <Container>
-             <NoteTitle >{selected.title}</NoteTitle>
+             <NoteTitle >{selected?.title}</NoteTitle>
             <TextBoxBody modifyLinkBody={updateSelectedLink}/>
         </Container>
     )

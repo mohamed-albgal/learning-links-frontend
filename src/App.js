@@ -1,19 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import { AuthContext }  from './Contexts';
 import NavBar from './components/NavBar'
 import MainContent from './components/containers/MainContent'
 import { Switch, Route } from 'react-router-dom';
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
+import { initialLinkState } from './reducers/linkReducers';
 
 const App = () => {
   const [authed, setAuthed] = useState(null);
+  const [DBLinks, setDBLinks] = useState(initialLinkState);
   useEffect ( () => {
-    !authed && checkUserSession();
-    // console.log(authed)
+    !authed && checkUserSession()
   },[authed])
 
+  useEffect(() => {
+    debugger
+    callAPI()
+  },[])
+
+  const callAPI = async () => {
+
+    try{
+      //merge what the db has and what i have until i can remove the dummyLinks without causing undefined ref errors
+      API.get("links", "/links").then(data => {
+        //items is an array of objects inside of data
+        //append that to the array of objects that is in initiallinksstate called links
+        const all = (initialLinkState.links.push(...data.Items));
+        setDBLinks(all);
+      })
+    }catch(e){
+      console.log('error getting the db messages');
+      console.log(e.message)
+    }
+  }
   const checkUserSession = async () => {
     try {
       const user = await Auth.currentUserInfo();
@@ -31,7 +52,7 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route exact path='/'>
-            {authed? <MainContent /> : <SignUp />}
+            {authed? <MainContent links={DBLinks}/> : <SignUp />}
           </Route>
           <Route exact path='/signin'>
             <SignIn />
@@ -45,3 +66,7 @@ const App = () => {
   )
 };  
 export default App;
+
+
+//cache the data and fetch using a hook
+//https://www.smashingmagazine.com/2020/07/custom-react-hook-fetch-cache-data/
