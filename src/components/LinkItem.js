@@ -22,6 +22,7 @@ const CheckButton = tw(IconButton)`text-purple-300 `
 const XButton = tw(IconButton)`text-red-400 bg-gray-900 `
 const TrashContainer = tw.div`text-xl text-gray-100 h-36 w-full`
 
+//this will need a refactor to instead of having 3 components in one
 const LinkForm = ({closeForm,openForm,link, deleteAction}) => {
     const [title, setTitle] = useState(link.title)
     const [goals, setGoals] = useState(link.goals)
@@ -39,15 +40,17 @@ const LinkForm = ({closeForm,openForm,link, deleteAction}) => {
 
         <TrashCan deleteAction={deleteAction} />
         </>
-    )};
+    )
+};
 
-    const TrashCan = (deleteAction) => {
-        return (
-            <>
-            <EditIcon onClick={deleteAction}><BsTrash color='black' /></EditIcon>
-            </>
-        )
-    }
+const TrashCan = (deleteAction) => {
+    return (
+        <>
+        <EditIcon onClick={deleteAction}><BsTrash color='black' /></EditIcon>
+        </>
+    )
+};
+
 const LinkContent = ({link, onClick,selected}) => {
     const showTicks = () => {
         return [...Array(link.goals).keys()].map(_ => <ProgressTick />)
@@ -68,7 +71,8 @@ const LinkContent = ({link, onClick,selected}) => {
 }
 
 // receives one link and its data
-const LinkItem =  ({ link }) => {
+
+export const LinkItem =  ({ link }) => {
     const [creating, setCreating ] = useState(!link)
     //will need this to modify the list of links with the newly created one
     const { dispatchLinkActions } = useContext(LinkContext)
@@ -101,4 +105,3 @@ const LinkItem =  ({ link }) => {
         </ItemContainer>
     )
 };
-export default LinkItem;

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer} from 'react';
 import tw from 'twin.macro'
 import LeftSide from './LeftSide';
 import { LinkContext } from '../../Contexts';
-import { linkReducer } from '../../reducers/linkReducers'
+import { linkReducer } from '../../store/reducers'
 
 const MainContent =  (props) => {
     //the hook will always return 2 things: the state and an action dispatcher to update the state with

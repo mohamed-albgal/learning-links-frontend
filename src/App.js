@@ -6,7 +6,7 @@ import MainContent from './components/containers/MainContent'
 import { Switch, Route } from 'react-router-dom';
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
-import { initialLinkState } from './reducers/linkReducers';
+import { initialLinkState } from './store/reducers'
 
 const App = () => {
   const [authed, setAuthed] = useState(null);

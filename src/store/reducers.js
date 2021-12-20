@@ -1,4 +1,5 @@
 
+import actionTypes from './actionTypes'
 /*
 
 data i need:    
@@ -18,13 +19,18 @@ data i need:
 
 // let schemaProperLink = 
     // {linkNotes, attachment, questions, topic}
-export const linkReducer = (state, action) => {
+// 
+const initialLinkState = { 
+    loading: false,
+    links: [{}],
+    error: '',
+}
+
+const linkReducer = (state=initialLinkState, action) => {
     let { links } = state;
     let { link } = action.payload
     switch(action.type){
-        case 'mutateOneLink':
-            //can't change the state directly, make a copy of it and then change that, 
-            //don't confuse locally scoped 'links' with the one stored in the state!
+        case actionTypes.UPDATE:
             let mutation = action.payload.link
             // let links = [ ...state.links ]
             //find the one with this id
@@ -33,22 +39,55 @@ export const linkReducer = (state, action) => {
             // replace it with the mutated link
             links[index] = mutation
             return {
+                ...state,
                 links,
+                loading: false,
             }
-        case 'newLinkItem':
+        case actionTypes.UPDATE_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            }
+        case actionTypes.CREATE:
             links.push(link)
             links = [ ...links]
-            return { links }
-        case 'deleteItem':
+            return { 
+                links,
+                loading: false,
+                ...state,
+            }
+        case actionTypes.CREATE_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            }
+        case actionTypes.DELETE:
             //all of this untested
             let i = links.findIndex(e => e.source === link.source)
             links = [...(links.splice(i,1))];
             return { links }
+        case actionTypes.DELETE_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            }
+        case actionTypes.SET_LOADING:
+            return {
+                ...state,
+                loading: true,
+            }
         default:
-            return state;
+            return { ...state };
     }
 }
 
-export const initialLinkState = {
-    links: [{}],
-}
+export { initialLinkState, linkReducer }
+
+
+/*
+ * //another tutorial, i searched another because it wasn't clear why id need actions when i could just call the api in the reducer??
+ * https://www.robinwieruch.de/react-usereducer-middleware/
+ * /
