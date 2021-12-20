@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import config from './amplify.config'
 import Amplify from '@aws-amplify/core';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { StoreProvider } from './store/store';
 const { cognito, s3, apiGateway } = config;
 Amplify.configure({
   Auth: {
@@ -33,9 +34,11 @@ Amplify.configure({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <StoreProvider>
+      <Router>
+        <App />
+      </Router>
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

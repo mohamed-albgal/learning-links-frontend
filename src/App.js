@@ -1,40 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Auth, API } from 'aws-amplify';
+import React, { useContext, useState, useEffect } from 'react';
+import { Auth } from 'aws-amplify';
 import { AuthContext }  from './Contexts';
 import NavBar from './components/NavBar'
 import MainContent from './components/containers/MainContent'
 import { Switch, Route } from 'react-router-dom';
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
-import { initialLinkState } from './store/reducers'
+import { StoreContext, StoreProvider } from './store/store';
 
 const App = () => {
   const [authed, setAuthed] = useState(null);
-  const [DBLinks, setDBLinks] = useState(initialLinkState);
+  const { state, actions } = useContext(StoreContext)
   useEffect ( () => {
     !authed && checkUserSession()
   },[authed])
 
   useEffect(() => {
-    callAPI()
-    //ideally, on teardown, update the cached links to persist changes?
+    actions.getAll();
   },[])
 
-  const callAPI = async () => {
-
-    try{
-      //merge what the db has and what i have until i can remove the dummyLinks without causing undefined ref errors
-      API.get("links", "/links").then(data => {
-        //items is an array of objects inside of data
-        //append that to the array of objects that is in initiallinksstate called links
-        const all = (initialLinkState.links.push(...data.Items));
-        setDBLinks(initialLinkState);
-      })
-    }catch(e){
-      console.log('error getting the db messages');
-      console.log(e.message)
-    }
-  }
   const checkUserSession = async () => {
     try {
       const user = await Auth.currentUserInfo();
@@ -52,7 +36,9 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route exact path='/'>
-            {authed? <MainContent links={DBLinks}/> : <SignUp />}
+            {authed?
+              <MainContent />
+            : <SignUp />}
           </Route>
           <Route exact path='/signin'>
             <SignIn />

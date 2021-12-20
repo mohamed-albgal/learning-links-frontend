@@ -2,6 +2,7 @@ import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
 import { LinkContext, SelectedLinkContext } from '../Contexts';
 import { BsPencilSquare, BsCheck, BsX, BsTrash }  from 'react-icons/bs';
+import { StoreContext } from '../store/store';
 
 
 
@@ -72,17 +73,17 @@ const LinkContent = ({link, onClick,selected}) => {
 
 // receives one link and its data
 
-export const LinkItem =  ({ link }) => {
+const LinkItem =  ({ link }) => {
     const [creating, setCreating ] = useState(!link)
+    const { state, actions} = useContext(StoreContext);
     //will need this to modify the list of links with the newly created one
-    const { dispatchLinkActions } = useContext(LinkContext)
     const { selected, setSelected } = useContext(SelectedLinkContext)
     
     const ItemContainer = selected.source === link.source ? Selected : Container
     const modifyLink = (data) => {
         Object.assign(link,data);
         let a = link;
-        dispatchLinkActions({type:'mutateOneLink', payload:{link}})
+        actions.update(link);
     }
 
 
@@ -105,3 +106,4 @@ export const LinkItem =  ({ link }) => {
         </ItemContainer>
     )
 };
+export default LinkItem
