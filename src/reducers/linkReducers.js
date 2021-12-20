@@ -11,68 +11,14 @@ data i need:
                 goals = []
                 completedGoalsSoFar
 
+                TODO: must change the lambda function (check with the mongodb schema that this will be ok?)
+                i want to add new fields on post, change the create handler, call some method to update that  function lambda function so api gateway 'knows'
 
-    */
-    const dummyLinks = [
-    {
-      title: "Learning Linux",
-      topic: "tech",
-      source: "https://linuxjourney.com/",
-      linkNotes: "Linux is a nice OS\n learning it is beneficial",
-      goals: 6,
-      completedGoals: 1, 
-      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-    },   
-    {
-      title: "AWS Certified Associate Solutions Architect",
-      topic: "tech",
-      source: "https://www.acloudguruthere.com/",
-      linkNotes: "I will become AWS certified because I am driven\n learning it is beneficial",
-      goals: 10,
-      completedGoals: 4,
-      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}} 
-    },   
+*/
 
-  {
-      topic: "tech",
-      title: "Become a better developer",
-      linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
-      source: "https://www.1codecademy.com/",
-      goals: 20,
-      completedGoals: 12, 
-      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-  },   {
-      topic: "tech",
-      title: "Sql mastery",
-      linkNotes: "Learning sql means a lot of practice and a lot of tables being made!",
-      goals: 6,
-      completedGoals: 1, 
-      source: "https://www.masterywithsql.com/",
-      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-  },   
-
-  {
-      topic: "tech",
-      title: "Ruby guru",
-      linkNotes: "Ruby is just another programming language that I will learn and master!",
-      goals: 10,
-      completedGoals: 4, 
-      source: "https://www.ruby-lang.org/en/documentation/quickstart/",
-      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-  },   
-
-  {
-      topic: "tech",
-      title: "Learn NoSql",
-      linkNotes: " NoSql is important to learn just like no sql is!",
-      goals: 20,
-      completedGoals: 12, 
-      source: "https://www.edx.org/learn/nosql",
-      questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-  },   
-]
+// let schemaProperLink = 
+    // {linkNotes, attachment, questions, topic}
 export const linkReducer = (state, action) => {
-    debugger
     let { links } = state;
     let { link } = action.payload
     switch(action.type){
@@ -98,13 +44,11 @@ export const linkReducer = (state, action) => {
             let i = links.findIndex(e => e.source === link.source)
             links = [...(links.splice(i,1))];
             return { links }
-
-
         default:
             return state;
     }
 }
 
 export const initialLinkState = {
-    links: [...dummyLinks],
+    links: [{}],
 }

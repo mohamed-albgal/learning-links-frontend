@@ -16,8 +16,8 @@ const App = () => {
   },[authed])
 
   useEffect(() => {
-    debugger
     callAPI()
+    //ideally, on teardown, update the cached links to persist changes?
   },[])
 
   const callAPI = async () => {
@@ -28,7 +28,7 @@ const App = () => {
         //items is an array of objects inside of data
         //append that to the array of objects that is in initiallinksstate called links
         const all = (initialLinkState.links.push(...data.Items));
-        setDBLinks(all);
+        setDBLinks(initialLinkState);
       })
     }catch(e){
       console.log('error getting the db messages');
@@ -67,6 +67,10 @@ const App = () => {
 };  
 export default App;
 
+
+// use a middleware hook to talk to the db, this shows how
+//
+//https://medium.com/@rossitrile93/how-i-replace-redux-redux-saga-with-react-446b4c84f788
 
 //cache the data and fetch using a hook
 //https://www.smashingmagazine.com/2020/07/custom-react-hook-fetch-cache-data/

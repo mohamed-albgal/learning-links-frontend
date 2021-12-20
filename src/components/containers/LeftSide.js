@@ -34,11 +34,7 @@ const LeftSide =  () => {
     const createNew = () => {
         let link =   {
             topic: "tech",
-            title: "Still working for some reason!",
             linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
-            source: "https://www.3codecademy.com/",
-            goals: 20,
-            completedGoals: 12, 
             questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
         }
         dispatchLinkActions({type:"newLinkItem", payload:{ link }})
