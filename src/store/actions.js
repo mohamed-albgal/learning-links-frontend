@@ -19,5 +19,5 @@ export const useActions = (state, dispatch) => ({
     }
 });
 
-//replace redux sage with context and hooks
+//replace redux saga with context and hooks
 //https://medium.com/@rossitrile93/how-i-replace-redux-redux-saga-with-react-446b4c84f788

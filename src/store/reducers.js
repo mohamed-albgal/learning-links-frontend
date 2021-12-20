@@ -28,10 +28,19 @@ const initialLinkState = {
 
 const linkReducer = (state=initialLinkState, action) => {
     let { links } = state;
-    let { link } = action.payload
+    let  link  = action?.payload?.link
     switch(action.type){
+        case actionTypes.GET:
+            //add all from the db to the current state
+            debugger
+            links = [ ...action.payload ]
+            return {
+                ...state,
+                links,
+                loading: false,
+            }
         case actionTypes.UPDATE:
-            let mutation = action.payload.link
+            let mutation = action.payload
             // let links = [ ...state.links ]
             //find the one with this id
             let index = links.findIndex(x => x.source === mutation.source)
@@ -50,6 +59,7 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.CREATE:
+            debugger
             links.push(link)
             links = [ ...links]
             return { 
@@ -87,7 +97,7 @@ const linkReducer = (state=initialLinkState, action) => {
 export { initialLinkState, linkReducer }
 
 
-/*
+/** 
  * //another tutorial, i searched another because it wasn't clear why id need actions when i could just call the api in the reducer??
  * https://www.robinwieruch.de/react-usereducer-middleware/
- * /
+ */
