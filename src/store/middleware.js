@@ -3,15 +3,18 @@ import actionTypes from './actionTypes';
 
 
 export const applyMiddleware = dispatch => action => {
-    debugger
     switch(action.type){
         case actionTypes.UPDATE:
+            debugger
             return API.put("links", `/links/${action.payload.linkId}`, {body: action.payload}).then(res => {
                 
                 debugger
+                //still have to merge what came back with what you have, i think
+                // this only returns what was modified
+                action.payload = Object.merge(action.payload, res)
                 dispatch({
                     type: actionTypes.UPDATE,
-                    payload: res.data
+                    payload: action.payload 
                 })
         } 
                 ).catch( err => dispatch({
