@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
-import Spinner from './Spinner';
+import { Spinner } from './Spinner';
 import VerificationForm from './Verification'
 import FormElements from  './FormElements';
 

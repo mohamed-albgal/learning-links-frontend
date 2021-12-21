@@ -36,7 +36,7 @@ const LeftSide =  () => {
                 </ArrowContainer>
                 {drawerOpen && 
                 <> <LinkListContainer>
-                    {state?.links?.map(link => <LinkItem key={link.linkId} link={link}/>)}
+                    {state?.links?.map(link => <LinkItem key={link?.linkId} link={link}/>)}
                     </LinkListContainer>
 
                     <PlusContainer >

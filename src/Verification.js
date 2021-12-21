@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
-import Spinner from './Spinner'
+import { Spinner } from './Spinner'
 import FormElements from  './FormElements';
 
 const { HeadLine, Field, Input, SubmitButton, ButtonContainer, ErrorMessage } = FormElements;

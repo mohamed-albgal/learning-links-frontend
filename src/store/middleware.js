@@ -11,7 +11,7 @@ export const applyMiddleware = dispatch => action => {
                 debugger
                 //still have to merge what came back with what you have, i think
                 // this only returns what was modified
-                action.payload = Object.merge(action.payload, res)
+                action.payload = Object.assign(action.payload, res)
                 dispatch({
                     type: actionTypes.UPDATE,
                     payload: action.payload 
