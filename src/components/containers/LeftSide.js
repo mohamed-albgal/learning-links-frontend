@@ -3,33 +3,33 @@ import tw, { styled } from 'twin.macro';
 import { FaPlus } from 'react-icons/fa'        
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs'
 import { } from 'react-icons/bs'
-import { LinkContext, SelectedLinkContext } from '../../Contexts';
 import LinkItem from '../LinkItem';
 import RightSide from './RightSide';
 import { StoreContext } from '../../store/store';
 import LinkForm from '../LinkForm';
 
 let open = true
-let index = -1 
 const LeftSide =  () => {
     const { state, actions} = useContext(StoreContext);
-    const [ selected, setSelected] = useState(state?.links[index] || state?.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
     const [ creating, setCreating] = useState(false);
+    const [selected, setSelected] = useState(null);
 
     useEffect(() => open = drawerOpen,[drawerOpen])
-    useEffect(() => index = state?.links.findIndex(x => x.linkId === selected.linkId),[selected, state?.links])
+    useEffect(() => setSelected(state.selected),[state.selected])
+
     const createNew = () => {
+        //selected needs to change, it should be this new one
         setCreating(true);
     }
 
     const newLinkHandler = (data) => {
-        actions.create(data);
+        actions.create(state.data);
+        //selected link equals this one
         setCreating(false);
     }
-    const providerValue = {selected, setSelected}
     return (
-        <SelectedLinkContext.Provider value={providerValue}>
+        <>
             <Container open={drawerOpen }>
                 <ArrowContainer>
                     <ArrowButton onClick={() => setDrawerOpen(!drawerOpen)}>
@@ -38,7 +38,7 @@ const LeftSide =  () => {
                 </ArrowContainer>
                 {drawerOpen && 
                 <> <LinkListContainer>
-                    {state?.links?.map(link => <LinkItem key={link?.linkId} link={link}/>)}
+                    {Object.keys(state?.links).map(linkId => <LinkItem key={linkId} link={state.links[linkId]}/>)}
                     </LinkListContainer>
 
                     {creating ? <LinkForm saveForm={newLinkHandler} closeForm={()=> setCreating(false)}   />
@@ -50,7 +50,7 @@ const LeftSide =  () => {
                 </>}
             </Container>
             <RightSide />
-        </SelectedLinkContext.Provider>
+        </>
 
         );
     };

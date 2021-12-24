@@ -20,11 +20,11 @@ const LinkContent = ({link, onClick,selected}) => {
     };
     return (
         <>
-            <EditIconContainer>
+            {selected && <EditIconContainer>
                 <EditIcon onClick={(e) => onClick(e)}>
                     <BsPencilSquare/>
                 </EditIcon>
-            </EditIconContainer>
+            </EditIconContainer>}
             <LinkTitle>{link?.title}</LinkTitle>
             <ProgressBar >
                 {showTicks()}
@@ -36,21 +36,21 @@ const LinkContent = ({link, onClick,selected}) => {
 const LinkItem =  ({ link }) => {
     const [creating, setCreating ] = useState(false)
     const { state, actions} = useContext(StoreContext);
-    //will need this to modify the list of links with the newly created one
-    const { selected, setSelected } = useContext(SelectedLinkContext)
     
-    const ItemContainer = selected?.linkId === link?.linkId ? Selected : LinkContainer
+    const ItemContainer = state.selected === link?.linkId ? Selected : LinkContainer
     const modifyLink = (data) => {
-        Object.assign(link,data);
-        let a = link;
-        actions.update(link);
+        actions.update({linkId: link.linkId, ...data});
         setCreating(false);
     }
 
     const deleteButton = (e) => {
         e.stopPropagation();
-        actions.delete(selected);
+        actions.delete(state.links[state.selected]);
         setCreating(false);
+    }
+
+    const selectLink = () => {
+        actions.updateSelected(link.linkId);
     }
 
     const editButtonClick = (e) => {
@@ -58,12 +58,12 @@ const LinkItem =  ({ link }) => {
         setCreating(!creating)
     }
     return (
-        <ItemContainer  onClick={() => setSelected(link)} type="button">
+        <ItemContainer  onClick={selectLink} type="button">
             <Content >
                 {creating ? 
                 <LinkForm deleteAction={deleteButton} link={link} saveForm={modifyLink} closeForm={()=>setCreating(false)} /> 
                 : 
-                <LinkContent onClick={editButtonClick} link={link} /> }
+                <LinkContent onClick={editButtonClick} link={link} selected /> }
             </Content>
         </ItemContainer>
     )

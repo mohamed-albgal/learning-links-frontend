@@ -4,10 +4,10 @@ import { BsCheck, BsX, BsTrash }  from 'react-icons/bs';
 import { LinkContainer } from './shared/StyleContainers';
 
 
-const IconButton = tw.button`inline mx-7 my-3 text-3xl bg-gray-900 rounded-full hover:border-gray-400 border border-gray-900`
-const TrashButton = tw(IconButton)`text-gray-100 `
+const IconButton = tw.button`inline mx-7 my-3 text-5xl bg-gray-900 rounded-full hover:border-gray-400 border border-gray-900`
+const TrashButton = tw.button`text-red-300 hover:border-red-500 hover:text-red-500 hover:bg-gray-800 p-2 bg-black rounded-md absolute bottom-2 right-3 font-thin border border-white`
 const CheckButton = tw(IconButton)`text-purple-300 `
-const XButton = tw(IconButton)`text-red-400 bg-gray-900 `
+const XButton = tw.button`text-gray-400 bg-gray-900 text-4xl rounded-full absolute top-2 right-2  `
 const FormButtonPair = tw.div``
 const FormContainer = tw.div`w-full m-0 overflow-scroll`
 const FormInput = tw.input`focus:outline-none focus:bg-gray-900 bg-gray-50 tracking-wider text-sm text-center pt-2 w-11/12 mx-2 border-b place-content-stretch border-yellow-100 rounded-sm bg-transparent`
@@ -38,7 +38,7 @@ const LinkForm = ({closeForm, saveForm,link={}, deleteAction=closeForm}) => {
         <FormButtonPair>
             <CheckButton onClick={saveChanges}><BsCheck/></CheckButton>
             <XButton onClick={closeForm} ><BsX/></XButton>
-            <TrashButton onClick={deleteAction} ><BsTrash /></TrashButton>
+            <TrashButton onClick={deleteAction}>Delete</TrashButton>
         </FormButtonPair>
         </FormContainer>
     </LinkContainer>

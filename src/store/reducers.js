@@ -22,15 +22,16 @@ data i need:
 // 
 const initialLinkState = { 
     loading: false,
-    links: [{}],
+    links: {},
+    selectedLink: null,
     error: '',
 }
 
 const linkReducer = (state=initialLinkState, action) => {
-    let links = [ ...state.links];
     switch(action.type){
         case actionTypes.GET:
-            links = [ ...action.payload ]
+            let links = {};
+            action.payload.forEach(l => links[l.linkId] = l)
             return {
                 ...state,
                 links,
@@ -38,11 +39,12 @@ const linkReducer = (state=initialLinkState, action) => {
             }
         case actionTypes.UPDATE:
             let mutation = action.payload
-            let index = links?.findIndex(link => link.linkId === mutation.linkId)
-            links[index] = Object.assign(links[index],mutation)
+            debugger
+            let newLinks = { ...state.links }
+            newLinks[mutation.linkId] = Object.assign(newLinks[mutation.linkId], mutation);
             return {
                 ...state,
-                links,
+                links: newLinks,
                 loading: false,
             }
         case actionTypes.UPDATE_FAIL:
@@ -52,7 +54,7 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.CREATE:
-            links.push(action.payload)
+            links[action.payload.linkId] = action.payload
             return { 
                 ...state,
                 links,
@@ -65,8 +67,10 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.DELETE:
+            links[action.payload.linkId] = undefined
             return { 
                 ...state,
+                selected: null,
                 links: links.filter(l => l.linkId !== action.payload.linkId),
                 loading: false,
             }
@@ -80,6 +84,12 @@ const linkReducer = (state=initialLinkState, action) => {
             return {
                 ...state,
                 loading: true,
+            }
+        case "updateSelected":
+            return {
+                ...state,
+                loading: false,
+                selected: action.payload
             }
         default:
             return { ...state };

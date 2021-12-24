@@ -16,6 +16,9 @@ export const useActions = (state, dispatch) => ({
     getAll: data => {
         dispatch({type: actionTypes.SET_LOADING});
         dispatch({type: actionTypes.GET, payload:data});
+    },
+    updateSelected: data => {
+        dispatch({type:"updateSelected", payload: data });
     }
 });
 

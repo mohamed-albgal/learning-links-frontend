@@ -9,15 +9,14 @@ const TextArea = tw.textarea` block mx-auto p-10 w-11/12 h-96 max-h-screen font-
 const CommitButton = tw(Button)`h-10 w-32 font-thin mt-6`
 
 const TextBoxBody = () => {
-    const { selected } = useContext(SelectedLinkContext)
     const [ body, setBody ] = useState("")
     const { state, actions } = useContext(StoreContext)
-    //i think this causes the effect of changing the message's body whenever the selected link changes
     useEffect(()=>{
-        setBody(selected?.linkNotes)
-    },[selected])
+        setBody(state?.links[state?.selected]?.linkNotes)
+    },[state?.selected])
+
     const commitChanges =  () => {
-        actions.update({ linkId: selected.linkId, linkNotes: body});
+        actions.update({ linkId: state.selected, linkNotes: body});
     }
     return (
         <>
