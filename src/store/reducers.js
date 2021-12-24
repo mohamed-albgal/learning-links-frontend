@@ -27,11 +27,9 @@ const initialLinkState = {
 }
 
 const linkReducer = (state=initialLinkState, action) => {
-    let { links } = state;
-    let  link  = action?.payload?.link
+    let links = [ ...state.links];
     switch(action.type){
         case actionTypes.GET:
-            //add all from the db to the current state
             links = [ ...action.payload ]
             return {
                 ...state,
@@ -40,11 +38,7 @@ const linkReducer = (state=initialLinkState, action) => {
             }
         case actionTypes.UPDATE:
             let mutation = action.payload
-            // let links = [ ...state.links ]
-            //find the one with this id
-            let index = links?.findIndex(x => x.linkId === mutation.linkId) || 0
-            if (index < 0) Error("how can the incoming mutated link not be present in the original list of links (index not found when calling reducer)?")
-            // replace it with the mutated link
+            let index = links?.findIndex(link => link.linkId === mutation.linkId)
             links[index] = Object.assign(links[index],mutation)
             return {
                 ...state,
@@ -58,12 +52,11 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.CREATE:
-            links = [ ...links]
-            links.push(link)
+            links.push(action.payload)
             return { 
+                ...state,
                 links,
                 loading: false,
-                ...state,
             }
         case actionTypes.CREATE_FAIL:
             return {
@@ -72,15 +65,11 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.DELETE:
-            //all of this untested
-            
-            let i = links.findIndex(e => e.linkId === action.payload.linkId)
-            links = [...(links.splice(i,1))];
             return { 
-                links,
                 ...state,
+                links: links.filter(l => l.linkId !== action.payload.linkId),
                 loading: false,
-             }
+            }
         case actionTypes.DELETE_FAIL:
             return {
                 ...state,

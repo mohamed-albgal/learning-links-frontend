@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "../Button";
 import tw from 'twin.macro'
 import { Link } from "react-router-dom";
 

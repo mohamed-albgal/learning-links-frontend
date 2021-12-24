@@ -1,8 +1,7 @@
-import React ,{ useState, useContext } from 'react'
-import tw, {styled} from'twin.macro';
+import React ,{ useState } from 'react'
+import tw from'twin.macro';
 import { BsCheck, BsX, BsTrash }  from 'react-icons/bs';
-import { StoreContext } from '../store/store';
-import Button from "./Button";
+import { LinkContainer } from './shared/StyleContainers';
 
 
 const IconButton = tw.button`inline mx-7 my-3 text-3xl bg-gray-900 rounded-full hover:border-gray-400 border border-gray-900`
@@ -21,7 +20,15 @@ const LinkForm = ({closeForm, saveForm,link={}, deleteAction=closeForm}) => {
     const [topic, setTopic] = useState(link.topic)
     const [priority, setPriority] = useState(link.priority)
 
+    const saveChanges = () => {
+        const newData = {
+            title, source, goals, topic,priority
+        }
+        saveForm(newData);
+    }
     return(<>
+
+    <LinkContainer>
          <FormContainer>
             <FormLabel ><FormInput value={topic} placeholder={"topic"} onChange={e => setTopic(e.target.value)} /></FormLabel>
             <FormLabel ><FormInput value={title} placeholder={"title"} onChange={e => setTitle(e.target.value)} /></FormLabel>
@@ -29,11 +36,12 @@ const LinkForm = ({closeForm, saveForm,link={}, deleteAction=closeForm}) => {
             <FormLabel ><FormInput value={goals} placeholder={"goals"} onChange={e => setGoals(e.target.value)} /></FormLabel>
             <FormLabel ><FormInput value={priority} placeholder={"priority"} onChange={e => setPriority(e.target.value)}  /></FormLabel>
         <FormButtonPair>
-            <CheckButton onClick={() => saveForm({title, source, goals, priority})}><BsCheck/></CheckButton>
+            <CheckButton onClick={saveChanges}><BsCheck/></CheckButton>
             <XButton onClick={closeForm} ><BsX/></XButton>
             <TrashButton onClick={deleteAction} ><BsTrash /></TrashButton>
         </FormButtonPair>
         </FormContainer>
+    </LinkContainer>
 
         </>
     )

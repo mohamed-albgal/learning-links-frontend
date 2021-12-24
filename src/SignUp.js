@@ -4,7 +4,7 @@ import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import { Spinner } from './Spinner';
 import VerificationForm from './Verification'
-import FormElements from  './FormElements';
+import FormElements from  './components/shared/FormElements';
 
 const { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
     Container, ErrorMessage, RedirectingLink } = FormElements;

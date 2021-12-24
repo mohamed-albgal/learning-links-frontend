@@ -3,7 +3,7 @@ import { Auth } from 'aws-amplify';
 import { Spinner } from './Spinner';
 import VerificationForm from './Verification'
 import { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
-    Container, ErrorMessage, RedirectingLink } from  './FormElements';
+    Container, ErrorMessage, RedirectingLink } from  './shared/FormElements';
 
 const SignUp = () => {
     const [ email, setEmail ] = useState("");

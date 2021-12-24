@@ -3,7 +3,7 @@ import { useHistory, Link, Redirect } from 'react-router-dom';
 import { Contexts } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import { Spinner } from './Spinner';
-import FormElements from './FormElements';
+import FormElements from './components/shared/FormElements'
 
 const { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
     Container, ErrorMessage, RedirectingLink } = FormElements

@@ -4,7 +4,7 @@ import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import { Spinner }from './Spinner';
 import { HeadLine, ClickableHeadLine, Field, Input, SubmitButton, ButtonContainer,
-    Container, ErrorMessage, RedirectingLink } from './FormElements'
+    Container, ErrorMessage, RedirectingLink } from './shared/FormElements'
 
 const SignIn = () => {
     const [ email, setEmail ] = useState("");

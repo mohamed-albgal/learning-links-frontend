@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
 import { Spinner } from './Spinner'
-import { HeadLine, Field, Input, SubmitButton, ButtonContainer, ErrorMessage } from './FormElements';
+import { HeadLine, Field, Input, SubmitButton, ButtonContainer, ErrorMessage } from './shared/FormElements';
 
 const Verification = ({ email, password }) => {
     const [ verification, setVerification ] = useState("");
