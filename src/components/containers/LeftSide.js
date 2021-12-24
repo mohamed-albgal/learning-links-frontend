@@ -21,17 +21,6 @@ const LeftSide =  () => {
     useEffect(() => index = state?.links.findIndex(x => x.linkId === selected.linkId),[selected, state?.links])
     const createNew = () => {
         setCreating(true);
-        alert("create clicked");
-        /**
-         * when you want to create a new one, this becomes a form,
-         * that when saved gets added to the list via state 
-         * 
-         */
-        // actions.create({
-        //     topic: "tech",
-        //     linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
-        //     questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-        // })
     }
 
     const newLinkHandler = (data) => {
