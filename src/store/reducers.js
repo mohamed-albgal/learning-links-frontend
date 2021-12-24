@@ -1,10 +1,10 @@
 
+import { FaSearch } from 'react-icons/fa';
 import actionTypes from './actionTypes'
 /*
 
 data i need:    
                 questions  = []
-                where are images stored?
                 id = string
                 title = string
                 images = []
@@ -32,7 +32,6 @@ const linkReducer = (state=initialLinkState, action) => {
     switch(action.type){
         case actionTypes.GET:
             //add all from the db to the current state
-            debugger
             links = [ ...action.payload ]
             return {
                 ...state,
@@ -43,10 +42,10 @@ const linkReducer = (state=initialLinkState, action) => {
             let mutation = action.payload
             // let links = [ ...state.links ]
             //find the one with this id
-            let index = links.findIndex(x => x.source === mutation.source)
+            let index = links?.findIndex(x => x.linkId === mutation.linkId) || 0
             if (index < 0) Error("how can the incoming mutated link not be present in the original list of links (index not found when calling reducer)?")
             // replace it with the mutated link
-            links[index] = mutation
+            links[index] = Object.assign(links[index],mutation)
             return {
                 ...state,
                 links,
@@ -59,9 +58,8 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.CREATE:
-            debugger
-            links.push(link)
             links = [ ...links]
+            links.push(link)
             return { 
                 links,
                 loading: false,
@@ -75,9 +73,14 @@ const linkReducer = (state=initialLinkState, action) => {
             }
         case actionTypes.DELETE:
             //all of this untested
-            let i = links.findIndex(e => e.source === link.source)
+            
+            let i = links.findIndex(e => e.linkId === action.payload.linkId)
             links = [...(links.splice(i,1))];
-            return { links }
+            return { 
+                links,
+                ...state,
+                loading: false,
+             }
         case actionTypes.DELETE_FAIL:
             return {
                 ...state,

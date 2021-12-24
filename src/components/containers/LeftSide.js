@@ -7,6 +7,7 @@ import { LinkContext, SelectedLinkContext } from '../../Contexts';
 import LinkItem from '../LinkItem';
 import RightSide from './RightSide';
 import { StoreContext } from '../../store/store';
+import LinkForm from '../LinkForm';
 
 let open = true
 let index = -1 
@@ -14,17 +15,29 @@ const LeftSide =  () => {
     const { state, actions} = useContext(StoreContext);
     const [ selected, setSelected] = useState(state?.links[index] || state?.links[0]);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
+    const [ creating, setCreating] = useState(false);
 
     useEffect(() => open = drawerOpen,[drawerOpen])
-    useEffect(() => index = state?.links.findIndex(x => x.source === selected.source),[selected, state?.links])
+    useEffect(() => index = state?.links.findIndex(x => x.linkId === selected.linkId),[selected, state?.links])
     const createNew = () => {
-        actions.create({
-            topic: "tech",
-            linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
-            questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
-        })
+        setCreating(true);
+        alert("create clicked");
+        /**
+         * when you want to create a new one, this becomes a form,
+         * that when saved gets added to the list via state 
+         * 
+         */
+        // actions.create({
+        //     topic: "tech",
+        //     linkNotes: " I know I can be better,\n I just have to remain focused and stay to the course!",
+        //     questions: {0:{"Some Question":"Some answer"}, 1:{"other question":"other answer"}}
+        // })
     }
 
+    const newLinkHandler = (data) => {
+        actions.create(data);
+        setCreating(false);
+    }
     const providerValue = {selected, setSelected}
     return (
         <SelectedLinkContext.Provider value={providerValue}>
@@ -39,11 +52,12 @@ const LeftSide =  () => {
                     {state?.links?.map(link => <LinkItem key={link?.linkId} link={link}/>)}
                     </LinkListContainer>
 
-                    <PlusContainer >
+                    {creating ? <LinkForm saveForm={newLinkHandler} closeForm={()=> setCreating(false)}   />
+                    : <PlusContainer >
                         <PlusButton onClick={createNew}>
                             <FaPlus/>
                         </PlusButton>
-                    </PlusContainer>
+                    </PlusContainer> }
                 </>}
             </Container>
             <RightSide />

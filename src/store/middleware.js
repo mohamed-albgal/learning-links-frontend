@@ -5,10 +5,8 @@ import actionTypes from './actionTypes';
 export const applyMiddleware = dispatch => action => {
     switch(action.type){
         case actionTypes.UPDATE:
-            debugger
             return API.put("links", `/links/${action.payload.linkId}`, {body: action.payload}).then(res => {
                 
-                debugger
                 //still have to merge what came back with what you have, i think
                 // this only returns what was modified
                 action.payload = Object.assign(action.payload, res)
@@ -24,7 +22,6 @@ export const applyMiddleware = dispatch => action => {
         case actionTypes.CREATE:
             return API.post("links","/links", { body: action.payload }).then(res => {
                 
-                debugger
                 dispatch({
                 type: actionTypes.CREATE,
                 payload: res,
@@ -47,16 +44,15 @@ export const applyMiddleware = dispatch => action => {
             
             ).catch( err => 
              {   
-                debugger
                 dispatch({
                 type: actionTypes.GET_FAIL,
                 payload: err.message,
             });
         });
         case actionTypes.DELETE:
-            return API.delete("links",`links/${action.payload.linkId}`).then(res => dispatch({
+            return API.del("links",`/links/${action.payload.linkId}`).then(res => dispatch({
                 type: actionTypes.DELETE,
-                payload: res.Items
+                payload: action.payload
             })).catch(err => dispatch({
                     type: actionTypes.DELETE_FAIL,
                     payload: err.message,

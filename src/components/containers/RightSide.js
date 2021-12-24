@@ -11,12 +11,8 @@ const SpinnerContainer = tw.div` backdrop-grayscale bg-purple-900 opacity-70 abs
 const Spinner = tw.div`animate-spin rounded-full w-1/3 h-1/3 border-t-4 border-b-2 border-purple-100 `
 
 const RightSide =  () => {
-    const { state, actions } = useContext(StoreContext)
+    const { state } = useContext(StoreContext)
     const { selected } = useContext(SelectedLinkContext);
-    const updateSelectedLink = (body) => {
-        let link =  { ...selected, linkNotes: body}
-        actions.update(link);
-    }
     const SpinningThing = () => (
         <SpinnerContainer>
             <Spinner />
@@ -26,7 +22,7 @@ const RightSide =  () => {
         <Container>
             {state.loading && <SpinningThing /> }
              <NoteTitle >{selected?.title}</NoteTitle>
-            <TextBoxBody modifyLinkBody={updateSelectedLink}/>
+            <TextBoxBody />
         </Container>
     )
 }
