@@ -14,14 +14,8 @@ const RightSide =  () => {
     const saveBody = (data) => {
         actions.update(data);
     }
-    const SpinningThing = () => (
-        <SpinnerContainer>
-            <Spinner />
-        </SpinnerContainer>
-    ) 
     return (
         <Container>
-            {state.loading && <SpinningThing /> }
              <NoteTitle >{state?.links[state?.selected]?.title}</NoteTitle>
             { state.selected && <TextBoxBody saveAction={saveBody} link={state.links[state.selected]}  />}
         </Container>

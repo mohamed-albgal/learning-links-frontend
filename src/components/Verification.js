@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../Contexts';
 import { Auth } from 'aws-amplify';
-import { Spinner } from './Spinner'
+import { Spinner } from './shared/Elements'
 import { HeadLine, Field, Input, SubmitButton, ButtonContainer, ErrorMessage } from './shared/FormElements';
 
 const Verification = ({ email, password }) => {

@@ -1,6 +1,6 @@
 import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
-import { SelectedLinkContext } from '../Contexts';
+import { Spinner } from './shared/Elements';
 import { Selected, LinkContainer  } from './shared/StyleContainers';
 import { BsPencilSquare, BsCheck, BsX, BsTrash }  from 'react-icons/bs';
 import { StoreContext } from '../store/store';
@@ -60,12 +60,12 @@ const LinkItem =  ({ link }) => {
     }
     return (
         <ItemContainer onClick={selectLink} type="button">
-            <Content >
+            {state.loading ? <Spinner /> : <Content >
                 {creating ? 
                 <LinkForm deleteAction={deleteButton} link={link} saveForm={modifyLink} closeForm={()=>setCreating(false)} /> 
                 : 
                 <LinkContent onClick={editButtonClick} link={link} selected={true} /> }
-            </Content>
+            </Content>}
         </ItemContainer>
     )
 };
