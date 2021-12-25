@@ -16,28 +16,28 @@ export const applyMiddleware = dispatch => action => {
                 }));
         case actionTypes.CREATE:
             return API.post("links","/links", { body: action.payload }).then(res => dispatch({
-                type: actionTypes.CREATE,
-                payload: res,
-            })).catch(err => dispatch({
-                type: actionTypes.UPDATE_FAIL,
-                payload: err.message,
-            }));
+                    type: actionTypes.CREATE,
+                    payload: res,
+                })).catch(err => dispatch({
+                    type: actionTypes.UPDATE_FAIL,
+                    payload: err.message,
+                }));
         case actionTypes.GET:
             return API.get("links", "/links").then(res => dispatch({
-                type: actionTypes.GET,
-                payload: res.Items,
-            })).catch( err => dispatch({
-                type: actionTypes.GET_FAIL,
-                payload: err.message,
-            }));
+                    type: actionTypes.GET,
+                    payload: res.Items,
+                })).catch( err => dispatch({
+                    type: actionTypes.GET_FAIL,
+                    payload: err.message,
+                }));
         case actionTypes.DELETE:
             return API.del("links",`/links/${action.payload.linkId}`).then(res => dispatch({
-                type: actionTypes.DELETE,
-                payload: action.payload
-            })).catch(err => dispatch({
-                    type: actionTypes.DELETE_FAIL,
-                    payload: err.message,
-            }));
+                    type: actionTypes.DELETE,
+                    payload: action.payload
+                })).catch(err => dispatch({
+                        type: actionTypes.DELETE_FAIL,
+                        payload: err.message,
+                }));
         default: dispatch(action)
     }
 }
