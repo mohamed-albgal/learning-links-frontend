@@ -15,19 +15,19 @@ const FormLabel = tw.div`text-xs my-5   `
 
 const LinkForm = ({closeForm, saveForm,link={}, deleteAction=closeForm}) => {
     const [title, setTitle] = useState(link.title)
-    const [source, setSource] = useState(link.source)
+    const [sourceUrl, setSourceUrl] = useState(link.sourceUrl)
     const [goals, setGoals] = useState(link.goals)
     const [topic, setTopic] = useState(link.topic)
     const [priority, setPriority] = useState(link.priority)
 
-    const saveChanges = () => saveForm({ title, source, goals, topic,priority });
+    const saveChanges = () => saveForm({ title, sourceUrl, goals, topic,priority });
 
     return(
         <LinkContainer>
             <FormContainer>
                 <FormLabel ><FormInput value={topic} placeholder={"topic"} onChange={e => setTopic(e.target.value)} /></FormLabel>
                 <FormLabel ><FormInput value={title} placeholder={"title"} onChange={e => setTitle(e.target.value)} /></FormLabel>
-                <FormLabel ><FormInput value={source} placeholder={"source"} onChange={e => setSource(e.target.value)} /></FormLabel>
+                <FormLabel ><FormInput value={sourceUrl} placeholder={"source URL"} onChange={e => setSourceUrl(e.target.value)} /></FormLabel>
                 <FormLabel ><FormInput value={goals} placeholder={"goals"} onChange={e => setGoals(e.target.value)} /></FormLabel>
                 <FormLabel ><FormInput value={priority} placeholder={"priority"} onChange={e => setPriority(e.target.value)}  /></FormLabel>
                 <FormButtonPair>

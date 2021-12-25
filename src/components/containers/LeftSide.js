@@ -13,14 +13,8 @@ const LeftSide =  () => {
     const { state, actions} = useContext(StoreContext);
     const [ drawerOpen, setDrawerOpen ] = useState(open);
     const [ creating, setCreating] = useState(false);
-    const [selected, setSelected] = useState(null);
 
     useEffect(() => open = drawerOpen,[drawerOpen])
-    useEffect(() => setSelected(state.selected),[state.selected])
-
-    const createNew = () => {
-        setCreating(true);
-    }
 
     const newLinkHandler = (data) => {
         actions.create(data);
@@ -41,7 +35,7 @@ const LeftSide =  () => {
 
                     {creating ? <LinkForm saveForm={newLinkHandler} closeForm={()=> setCreating(false)}   />
                     : <PlusContainer >
-                        <PlusButton onClick={createNew}>
+                        <PlusButton onClick={() => setCreating(true)}>
                             <FaPlus/>
                         </PlusButton>
                     </PlusContainer> }
