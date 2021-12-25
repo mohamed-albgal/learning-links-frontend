@@ -19,13 +19,11 @@ const LeftSide =  () => {
     useEffect(() => setSelected(state.selected),[state.selected])
 
     const createNew = () => {
-        //selected needs to change, it should be this new one
         setCreating(true);
     }
 
     const newLinkHandler = (data) => {
         actions.create(data);
-        //selected link equals this one
         setCreating(false);
     }
     return (

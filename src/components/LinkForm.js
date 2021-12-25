@@ -20,30 +20,23 @@ const LinkForm = ({closeForm, saveForm,link={}, deleteAction=closeForm}) => {
     const [topic, setTopic] = useState(link.topic)
     const [priority, setPriority] = useState(link.priority)
 
-    const saveChanges = () => {
-        const newData = {
-            title, source, goals, topic,priority
-        }
-        saveForm(newData);
-    }
-    return(<>
+    const saveChanges = () => saveForm({ title, source, goals, topic,priority });
 
-    <LinkContainer>
-         <FormContainer>
-            <FormLabel ><FormInput value={topic} placeholder={"topic"} onChange={e => setTopic(e.target.value)} /></FormLabel>
-            <FormLabel ><FormInput value={title} placeholder={"title"} onChange={e => setTitle(e.target.value)} /></FormLabel>
-            <FormLabel ><FormInput value={source} placeholder={"source"} onChange={e => setSource(e.target.value)} /></FormLabel>
-            <FormLabel ><FormInput value={goals} placeholder={"goals"} onChange={e => setGoals(e.target.value)} /></FormLabel>
-            <FormLabel ><FormInput value={priority} placeholder={"priority"} onChange={e => setPriority(e.target.value)}  /></FormLabel>
-        <FormButtonPair>
-            <CheckButton onClick={saveChanges}><BsCheck/></CheckButton>
-            <XButton onClick={closeForm} ><BsX/></XButton>
-            <TrashButton onClick={deleteAction}>Delete</TrashButton>
-        </FormButtonPair>
-        </FormContainer>
-    </LinkContainer>
-
-        </>
+    return(
+        <LinkContainer>
+            <FormContainer>
+                <FormLabel ><FormInput value={topic} placeholder={"topic"} onChange={e => setTopic(e.target.value)} /></FormLabel>
+                <FormLabel ><FormInput value={title} placeholder={"title"} onChange={e => setTitle(e.target.value)} /></FormLabel>
+                <FormLabel ><FormInput value={source} placeholder={"source"} onChange={e => setSource(e.target.value)} /></FormLabel>
+                <FormLabel ><FormInput value={goals} placeholder={"goals"} onChange={e => setGoals(e.target.value)} /></FormLabel>
+                <FormLabel ><FormInput value={priority} placeholder={"priority"} onChange={e => setPriority(e.target.value)}  /></FormLabel>
+                <FormButtonPair>
+                    <CheckButton onClick={saveChanges}><BsCheck/></CheckButton>
+                    <XButton onClick={closeForm} ><BsX/></XButton>
+                    <TrashButton onClick={deleteAction}>Delete</TrashButton>
+                </FormButtonPair>
+            </FormContainer>
+        </LinkContainer>
     )
 };
 
