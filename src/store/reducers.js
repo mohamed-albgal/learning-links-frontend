@@ -51,7 +51,7 @@ const linkReducer = (state=initialLinkState, action) => {
         case actionTypes.DELETE:
             
             let stateLinks = {...(state.links)}
-            stateLinks[action.payload.linkId] = undefined
+            delete stateLinks[action.payload.linkId];
             return { 
                 ...state,
                 selected: null,

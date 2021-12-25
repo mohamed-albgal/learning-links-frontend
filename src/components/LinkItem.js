@@ -45,11 +45,12 @@ const LinkItem =  ({ link }) => {
 
     const deleteButton = (e) => {
         e.stopPropagation();
-        actions.delete(state.links[state.selected]);
+        actions.delete(link);
         setCreating(false);
     }
 
     const selectLink = () => {
+        //need to only set 
         !creating && actions.updateSelected(link.linkId);
     }
 
