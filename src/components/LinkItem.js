@@ -50,7 +50,7 @@ const LinkItem =  ({ link }) => {
     }
 
     const selectLink = () => {
-        actions.updateSelected(link.linkId);
+        !creating && actions.updateSelected(link.linkId);
     }
 
     const editButtonClick = (e) => {
