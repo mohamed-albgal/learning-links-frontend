@@ -58,12 +58,12 @@ const LinkItem =  ({ link }) => {
         setCreating(!creating)
     }
     return (
-        <ItemContainer  onClick={selectLink} type="button">
+        <ItemContainer onClick={selectLink} type="button">
             <Content >
                 {creating ? 
                 <LinkForm deleteAction={deleteButton} link={link} saveForm={modifyLink} closeForm={()=>setCreating(false)} /> 
                 : 
-                <LinkContent onClick={editButtonClick} link={link} selected /> }
+                <LinkContent onClick={editButtonClick} link={link} selected={true} /> }
             </Content>
         </ItemContainer>
     )

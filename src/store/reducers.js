@@ -1,29 +1,11 @@
 
 import { FaSearch } from 'react-icons/fa';
 import actionTypes from './actionTypes'
-/*
 
-data i need:    
-                questions  = []
-                id = string
-                title = string
-                images = []
-                url = string 
-                goals = []
-                completedGoalsSoFar
-
-                TODO: must change the lambda function (check with the mongodb schema that this will be ok?)
-                i want to add new fields on post, change the create handler, call some method to update that  function lambda function so api gateway 'knows'
-
-*/
-
-// let schemaProperLink = 
-    // {linkNotes, attachment, questions, topic}
-// 
 const initialLinkState = { 
     loading: false,
-    links: {},
-    selectedLink: null,
+    links: [],
+    selected: null,
     error: '',
 }
 
@@ -39,7 +21,6 @@ const linkReducer = (state=initialLinkState, action) => {
             }
         case actionTypes.UPDATE:
             let mutation = action.payload
-            debugger
             let newLinks = { ...state.links }
             newLinks[mutation.linkId] = Object.assign(newLinks[mutation.linkId], mutation);
             return {
@@ -54,10 +35,11 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.CREATE:
-            links[action.payload.linkId] = action.payload
+            let l = { ...(state.links)}
+            l[action.payload.linkId] = action.payload
             return { 
                 ...state,
-                links,
+                links:l,
                 loading: false,
             }
         case actionTypes.CREATE_FAIL:
@@ -67,11 +49,13 @@ const linkReducer = (state=initialLinkState, action) => {
                 loading: false,
             }
         case actionTypes.DELETE:
-            links[action.payload.linkId] = undefined
+            
+            let stateLinks = {...(state.links)}
+            stateLinks[action.payload.linkId] = undefined
             return { 
                 ...state,
                 selected: null,
-                links: links.filter(l => l.linkId !== action.payload.linkId),
+                links: stateLinks,
                 loading: false,
             }
         case actionTypes.DELETE_FAIL:

@@ -24,7 +24,7 @@ const LeftSide =  () => {
     }
 
     const newLinkHandler = (data) => {
-        actions.create(state.data);
+        actions.create(data);
         //selected link equals this one
         setCreating(false);
     }
@@ -36,7 +36,7 @@ const LeftSide =  () => {
                         { drawerOpen ? <BsFillCaretLeftFill />:< BsFillCaretRightFill />}
                     </ArrowButton>
                 </ArrowContainer>
-                {drawerOpen && 
+                {drawerOpen && state.links && 
                 <> <LinkListContainer>
                     {Object.keys(state?.links).map(linkId => <LinkItem key={linkId} link={state.links[linkId]}/>)}
                     </LinkListContainer>
