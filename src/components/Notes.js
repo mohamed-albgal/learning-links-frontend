@@ -8,15 +8,17 @@ const NoteTitle= tw.div`text-xl font-semibold text-center`
 
 const Notes = () => {
     const { state,actions } = useContext(StoreContext)
+    const link = state.links[state.selected]
 
     const saveBody = (data) => {
         actions.update(data);
     }
 
+
     return (
         <>
-            <NoteTitle >{state?.links[state?.selected]?.title}</NoteTitle>
-            { state.selected && <TextBoxBody saveAction={saveBody} link={state.links[state.selected]}  />}
+            <NoteTitle >{link.title}</NoteTitle>
+            <TextBoxBody saveAction={saveBody} link={state.links[state.selected]}  />
         </>
     )
 
