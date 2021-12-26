@@ -16,6 +16,18 @@ const Pictures = () => {
             <NoteTitle >Pictures section coming soon</NoteTitle>
             <NoteTitle >Pictures section coming soon</NoteTitle>
             <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
+            <NoteTitle >Pictures section coming soon</NoteTitle>
         </>
     )
 
