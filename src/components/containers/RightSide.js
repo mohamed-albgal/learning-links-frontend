@@ -1,28 +1,39 @@
-import React, { useContext } from 'react';
-import tw from 'twin.macro';
-import TextBoxBody from '../TextBoxBody';
+import React, { useContext, useEffect, useState } from 'react';
+import tw, { styled } from 'twin.macro';
+import Notes from '../Notes';
+import Questions from '../Questions'
+import Pictures from '../Pictures'
+
+
 import { StoreContext } from '../../store/store';
 import Button from '../Button';
 const Container = tw.div`w-2/3 bg-gray-100 relative flex-1 p-10`;
-const NoteTitle= tw.div`text-xl font-semibold text-center`
-const TabBar = tw.div`flex   bg-purple-900 rounded-full py-2 w-1/2 mx-auto mb-10  justify-around self-center`
-const TabButton = tw(Button)`mx-3 border border-black h-10 rounded-full w-full bg-yellow-400 `
+const TabBar = tw.div`flex  w-1/2  mb-10  justify-between self-center`
+const TabButton = tw.button`bg-purple-100 border border-purple-300  h-10 rounded-full mx-1 w-10/12 `
+const FocusedTabButton = tw.button`bg-purple-900  text-purple-50 mx-1  border border-black h-10 rounded-full w-10/12 shadow-lg`
 
 const RightSide =  () => {
-    const { state,actions } = useContext(StoreContext)
-    const saveBody = (data) => {
-        actions.update(data);
+    const { state, actions } = useContext(StoreContext)
+    const [ tabInFocus, setTabInFocus] = useState(0);
+
+    const makeTabs = () => {
+        return( ["Notes", "Questions", "Pictures"].map((tabName,i) =>{
+            let ButtonType = tabInFocus === i ? FocusedTabButton : TabButton 
+            return <ButtonType onClick={() => setTabInFocus(i)} >{tabName}</ButtonType>
+        }));
     }
+
     return (
-        <Container>
+        <>
+        { state.selected && <Container>
             <TabBar>
-                <TabButton>Notes</TabButton>
-                <TabButton>Questions</TabButton>
-                <TabButton>Images</TabButton>
+                {makeTabs()}
             </TabBar>
-             <NoteTitle >{state?.links[state?.selected]?.title}</NoteTitle>
-            { state.selected && <TextBoxBody saveAction={saveBody} link={state.links[state.selected]}  />}
-        </Container>
+            {tabInFocus === 0 &&  <Notes />}
+            {tabInFocus === 1 &&  <Questions />}
+            {tabInFocus === 2 &&  <Pictures/>}
+        </Container>}
+        </>
     )
 }
 export default RightSide;
