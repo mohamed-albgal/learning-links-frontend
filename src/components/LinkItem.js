@@ -6,7 +6,7 @@ import { BsPencilSquare, BsCheck, BsX, BsTrash }  from 'react-icons/bs';
 import { StoreContext } from '../store/store';
 import LinkForm from './LinkForm';
 
-const Content = styled.button( () => [tw`min-h-full p-2 w-full font-thin text-white`] )
+const Content = styled.div( () => [tw`min-h-full p-2 w-full font-thin text-white`] )
 const ProgressBar = styled.div( () => [ tw`flex justify-items-start  h-1`])
 const ProgressTick = tw.div`mr-3 h-1 w-1/6 bg-yellow-400`
 const LinkTitle = tw.p`font-semibold my-3`
@@ -16,7 +16,7 @@ const EditIcon = tw.button`text-xl text-gray-400 hover:text-yellow-300`
 
 const LinkContent = ({link, onClick,selected}) => {
     const showTicks = () => {
-        return [...Array(link?.goals).keys()].map(_ => <ProgressTick />)
+        return [...Array(link?.prioriy).keys()].map(_ => <ProgressTick />)
     };
     return (
         <>

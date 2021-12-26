@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import tw, { styled } from 'twin.macro';
-import { FaPlus } from 'react-icons/fa'        
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs'
 import { } from 'react-icons/bs'
 import LinkItem from '../LinkItem';
 import RightSide from './RightSide';
 import { StoreContext } from '../../store/store';
 import LinkForm from '../LinkForm';
+import{ ArrowButton, ArrowContainer, PlusButton} from '../shared/Elements'
+
+const LinkListContainer = tw.div` flex flex-col justify-between `
 
 let open = true
 const LeftSide =  () => {
@@ -33,12 +35,8 @@ const LeftSide =  () => {
                     {Object.keys(state?.links).map(linkId => <LinkItem key={linkId} link={state.links[linkId]}/>)}
                     </LinkListContainer>
 
-                    {creating ? <LinkForm saveForm={newLinkHandler} closeForm={()=> setCreating(false)}   />
-                    : <PlusContainer >
-                        <PlusButton onClick={() => setCreating(true)}>
-                            <FaPlus/>
-                        </PlusButton>
-                    </PlusContainer> }
+                    {creating ? <LinkForm saveForm={newLinkHandler} closeForm={()=> setCreating(false)}/>
+                        : <PlusButton clickHandler={() => setCreating(true)} ></PlusButton>}
                 </>}
             </Container>
             <RightSide />
@@ -51,12 +49,7 @@ export default LeftSide;
 const Container = styled.div( ({open}) =>[ !open ? tw`w-0`: tw`w-1/3`, 
     tw`transition-width duration-700 ease-in-out p-12 bg-gray-200 border border-gray-200 overflow-scroll flex-none shadow-2xl `,
 ]);
-const LinkListContainer = tw.div` flex flex-col justify-between `
-const Icon = tw.button`text-gray-800  border border-gray-100 hover:border-yellow-300 shadow-md bg-gray-100 text-4xl`
-const ArrowButton = tw(Icon)`m-1 mr-6 rounded-md `
-const ArrowContainer = tw.div`text-right w-auto -mr-6 -mt-8 mb-1`
-const PlusContainer = tw.div`py-5 text-center`
-const PlusButton = tw(Icon)`text-gray-800 p-1 rounded-full text-3xl`
+
 
 
 /*
