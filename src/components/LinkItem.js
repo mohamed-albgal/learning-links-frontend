@@ -2,7 +2,7 @@ import React ,{ useState, useContext } from 'react'
 import tw, {styled} from'twin.macro';
 import { Spinner } from './shared/Elements';
 import { Selected, LinkContainer  } from './shared/StyleContainers';
-import { BsPencilSquare, BsCheck, BsX, BsTrash }  from 'react-icons/bs';
+import { BsPencilSquare }  from 'react-icons/bs';
 import { StoreContext } from '../store/store';
 import LinkForm from './LinkForm';
 
