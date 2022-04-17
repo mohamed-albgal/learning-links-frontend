@@ -14,7 +14,6 @@ const Notes = () => {
         actions.update(data);
     }
 
-
     return (
         <>
             <NoteTitle >{link.title}</NoteTitle>

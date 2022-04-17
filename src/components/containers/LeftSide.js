@@ -22,6 +22,7 @@ const LeftSide =  () => {
         actions.create(data);
         setCreating(false);
     }
+
     return (
         <>
             <Container open={drawerOpen }>

@@ -18,3 +18,9 @@ const MainContent =  () => {
 export default MainContent;
 //tutorial:
 //https://hswolff.com/blog/how-to-usecontext-with-usereducer/
+/**
+ * 
+ * 
+ * malbgal+testing
+ * Something123!
+ */
